@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_blank"
     android:id="@+id/signUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/background_blank"
     tools:context=".SignUpPage">
 
     <ImageView
@@ -98,14 +98,14 @@
 
 
     <!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@drawable/sign_up_img"-->
-<!--        android:orientation="horizontal"-->
-<!--        tools:layout_editor_absoluteX="99dp"-->
-<!--        tools:layout_editor_absoluteY="343dp">-->
+    <!--        android:id="@+id/linearLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="@drawable/sign_up_img"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        tools:layout_editor_absoluteX="99dp"-->
+    <!--        tools:layout_editor_absoluteY="343dp">-->
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
