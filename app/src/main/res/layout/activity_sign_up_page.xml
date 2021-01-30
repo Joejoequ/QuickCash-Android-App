@@ -2,83 +2,90 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_blank"
     android:id="@+id/signUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpPage">
 
+    <ImageView
+        android:id="@+id/quickCash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/quick_cash"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-11dp" />
+
+    <ImageView
+        android:id="@+id/createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/create_account"
+        tools:layout_editor_absoluteX="-6dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <EditText
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginRight="142dp"
         android:ems="10"
         android:hint="please enter username"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="388dp" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="63dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginRight="138dp"
         android:ems="10"
         android:hint="please enter password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="479dp" />
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
-        android:text="submit"
-        app:layout_constraintEnd_toStartOf="@+id/BacktoLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+    <ImageView
+        android:id="@+id/lockIcon"
+        android:layout_width="38dp"
+        android:layout_height="32dp"
+        app:srcCompat="@mipmap/lock_icon"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="479dp" />
+
+    <ImageView
+        android:id="@+id/userIcon"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        app:srcCompat="@mipmap/user_icon"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="388dp" />
 
     <Button
         android:id="@+id/BacktoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginRight="142dp"
         android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        tools:layout_editor_absoluteX="76dp"
+        tools:layout_editor_absoluteY="571dp" />
 
     <Button
-        android:id="@+id/forgetPassword"
-        android:layout_width="wrap_content"
+        android:id="@+id/submit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="115dp"
-        android:layout_marginLeft="115dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="203dp"
-        android:layout_marginRight="203dp"
-        android:text="forget?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit"
-        app:strokeColor="@color/white" />
+        android:text="submit"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="571dp" />
+
+
+    <!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/sign_up_img"-->
+<!--        android:orientation="horizontal"-->
+<!--        tools:layout_editor_absoluteX="99dp"-->
+<!--        tools:layout_editor_absoluteY="343dp">-->
+
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

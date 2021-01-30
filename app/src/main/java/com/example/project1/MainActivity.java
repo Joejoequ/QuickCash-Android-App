@@ -74,4 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent switchLogIn = new Intent(this, LogIn.class);
         startActivity(switchLogIn);
     }
+
+
 }

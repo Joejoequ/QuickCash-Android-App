@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+//kessel123
 public class ExampleUnitTest {
     static MainActivity mainActivity;
     static SignUpPage signUp;
