@@ -40,6 +40,7 @@ public class ExampleUnitTest {
         assertFalse(user.isEmptyPassword(temp2));
     }
 
+    @Test
     /**AT3:1-3**/
     public void checkValidUsername() {
         User temp1 = new User("and123","1111");
@@ -51,6 +52,7 @@ public class ExampleUnitTest {
         assertFalse(user.isValidUserName(temp3));
     }
 
+    @Test
     /**AT3:1-4**/
     public void checkValidPassword() {
         // check short password
