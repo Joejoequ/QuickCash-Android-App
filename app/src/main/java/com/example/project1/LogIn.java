@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener {
+    //java.util.UUID.randomUUID().toString()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +25,12 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         // change to sign up page
         Intent switchSignUp = new Intent(this, SignUpPage.class);
         startActivity(switchSignUp);
+    }
+
+    static public boolean connection(){
+        return false;
+    }
+    static public boolean checkAccount(String username, String password){
+        return false;
     }
 }

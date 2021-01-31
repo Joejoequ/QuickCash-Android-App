@@ -117,6 +117,7 @@ public class LoginActivityTest {
 
 
     @Test
+    //if it will jump to SignUpPage after click the register button
     public void GotoRegister() {
 
         onView(withId(R.id.toSignUp)).perform(click());
