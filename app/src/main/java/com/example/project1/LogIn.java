@@ -20,14 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
 
-public class LogIn extends AppCompatActivity  {
+public class LogIn extends AppCompatActivity {
 
     private EditText mUserNameEditText, mPasswordEditText;
     private Button mSigninButton;
     private Button switchToSignUp;
-
     private DatabaseReference dbUser;
-    //java.util.UUID.randomUUID().toString()
+    static public boolean connection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class LogIn extends AppCompatActivity  {
             actionBar.hide();
         }
 
+
         mUserNameEditText = findViewById(R.id.userName);
         mPasswordEditText = findViewById(R.id.password);
         mSigninButton = findViewById(R.id.loginBtn);
@@ -49,6 +50,9 @@ public class LogIn extends AppCompatActivity  {
         switchToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //User u = new User(mUserNameEditText.getText().toString().trim(),mPasswordEditText.getText().toString());
+                //dbUser.child(java.util.UUID.randomUUID().toString()).setValue(u);
                 Intent switchSignUp = new Intent(LogIn.this, SignUpPage.class);
                 startActivity(switchSignUp);
             }
@@ -57,6 +61,7 @@ public class LogIn extends AppCompatActivity  {
         mSigninButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String user_name = mUserNameEditText.getText().toString().trim();
                 String user_password = mPasswordEditText.getText().toString().trim();
                 if (user_name.isEmpty())
@@ -66,20 +71,85 @@ public class LogIn extends AppCompatActivity  {
                 else {
 
                     checkAccount(user_name, user_password);
+
+
                 }
             }
         });
 
 
+    }
+
+
+    static public boolean connection() {
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedRef.addValueEventListener(new ValueEventListener() {
+                                               @Override
+                                               public void onDataChange(DataSnapshot snapshot) {
+                                                   //LogIn.connection= snapshot.getValue(Boolean.class);
+                                                   LogIn.connection = false;
+                                                   if (snapshot.getValue(Boolean.class) != null) {
+                                                       LogIn.connection = (boolean) snapshot.getValue(Boolean.class);
+
+                                                   }
+
+                                               }
+
+                                               @Override
+                                               public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                               }
+                                           }
+        );
+        return LogIn.connection;
 
     }
 
 
+    public void checkAccount(String username, String password) {
 
-    static public boolean connection(){
-        return false;
+
+        dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
+                        User u = adSnapshot.getValue(User.class);
+
+                        if (u.password.equals(password)) {
+                            loggedin();
+
+                        } else {
+                            Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(LogIn.this, "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (!connection()) {
+            Toast.makeText(getApplicationContext(), "Failed To Connect To Server \nPlease Check Your Settings", Toast.LENGTH_SHORT).show();
+        }
+
     }
-    static public boolean checkAccount(String username, String password){
-        return false;
+
+    public void loggedin() {
+        mPasswordEditText.setText("");
+        mUserNameEditText.setText("");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+
     }
 }

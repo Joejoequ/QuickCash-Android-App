@@ -21,6 +21,7 @@ public class User {
         return password;
     }
 
+
     // User can change their password as they want
     public void changePassword(String password) {
         this.password = password;
