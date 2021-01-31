@@ -19,7 +19,7 @@
         app:srcCompat="@mipmap/quick_cash" />
 
     <ImageView
-        android:id="@+id/createAccount"
+        android:id="@+id/Login"
         android:layout_width="282dp"
         android:layout_height="79dp"
         android:layout_marginTop="280dp"
@@ -43,7 +43,7 @@
         android:layout_height="33dp"
         android:layout_marginTop="33dp"
         app:layout_constraintEnd_toStartOf="@+id/userName"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount"
+        app:layout_constraintTop_toBottomOf="@+id/Login"
         app:srcCompat="@mipmap/user_icon" />
 
     <Button
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/Login" />
 
     <EditText
         android:id="@+id/password"
