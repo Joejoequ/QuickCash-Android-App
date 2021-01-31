@@ -38,7 +38,7 @@ public class LogIn extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-
+        connection();
 
         mUserNameEditText = findViewById(R.id.userName);
         mPasswordEditText = findViewById(R.id.password);
@@ -84,23 +84,25 @@ public class LogIn extends AppCompatActivity {
     static public boolean connection() {
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
 
-        connectedRef.addValueEventListener(new ValueEventListener() {
-                                               @Override
-                                               public void onDataChange(DataSnapshot snapshot) {
-                                                   //LogIn.connection= snapshot.getValue(Boolean.class);
-                                                   LogIn.connection = false;
-                                                   if (snapshot.getValue(Boolean.class) != null) {
-                                                       LogIn.connection = (boolean) snapshot.getValue(Boolean.class);
+        connectedRef.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        //LogIn.connection= snapshot.getValue(Boolean.class);
+                        LogIn.connection = false;
+                        if (snapshot.getValue(Boolean.class) != null) {
 
-                                                   }
+                            LogIn.connection = (boolean) snapshot.getValue(Boolean.class);
 
-                                               }
+                        }
 
-                                               @Override
-                                               public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
 
-                                               }
-                                           }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                }
         );
         return LogIn.connection;
 
@@ -109,37 +111,38 @@ public class LogIn extends AppCompatActivity {
 
     public void checkAccount(String username, String password) {
 
-
-        dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
-                        User u = adSnapshot.getValue(User.class);
-
-                        if (u.password.equals(password)) {
-                            loggedin();
-
-                        } else {
-                            Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LogIn.this, "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         if (!connection()) {
             Toast.makeText(getApplicationContext(), "Failed To Connect To Server \nPlease Check Your Settings", Toast.LENGTH_SHORT).show();
         }
+        else {
+            dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                        for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
+                            User u = adSnapshot.getValue(User.class);
+
+                            if (u.password.equals(password)) {
+                                loggedin();
+
+                            } else {
+                                Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                        Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(LogIn.this, "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
 
     }
 
