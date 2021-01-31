@@ -53,6 +53,25 @@ public class LogIn extends AppCompatActivity  {
                 startActivity(switchSignUp);
             }
         });
+
+        mSigninButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user_name = mUserNameEditText.getText().toString().trim();
+                String user_password = mPasswordEditText.getText().toString().trim();
+                if (user_name.isEmpty())
+                    Toast.makeText(getApplicationContext(), "enter your username", Toast.LENGTH_SHORT).show();
+                else if (user_password.isEmpty())
+                    Toast.makeText(getApplicationContext(), "enter your password", Toast.LENGTH_SHORT).show();
+                else {
+
+                    checkAccount(user_name, user_password);
+                }
+            }
+        });
+
+
+
     }
 
 
