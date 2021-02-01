@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,11 +25,19 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private String UserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //access loggedin user information
+        Intent intent=getIntent();
+        UserName=intent.getStringExtra("UserName");
+
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -66,6 +75,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
+
+//after login and get user information
+        if (UserName!=null){
+        //update the user information in the navigation bar
+            View mHeaderView = navigationView.getHeaderView(0);
+            TextView mDrawerHeaderTitle = (TextView) mHeaderView.findViewById(R.id.nav_username);
+           mDrawerHeaderTitle.setText("Welcome!   "+UserName);
+           //set up logout button
+           Menu menuInfo=navigationView.getMenu();
+            MenuItem itemInfo = menuInfo.getItem(2);
+            itemInfo.setTitle("Logout");
+            }
 
     }
 

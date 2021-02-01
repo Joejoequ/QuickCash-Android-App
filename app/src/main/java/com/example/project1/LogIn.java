@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class LogIn extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        //access database, prepare for checking connection later
         connection();
 
         mUserNameEditText = findViewById(R.id.userName);
@@ -124,7 +126,8 @@ public class LogIn extends AppCompatActivity {
                             User u = adSnapshot.getValue(User.class);
 
                             if (u.password.equals(password)) {
-                                loggedin();
+                                //should use unique UID later
+                                loggedin(u.userName);
 
                             } else {
                                 Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
@@ -146,11 +149,12 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-    public void loggedin() {
+    public void loggedin(String UserName) {
         mPasswordEditText.setText("");
         mUserNameEditText.setText("");
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("UserName",UserName);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
 
