@@ -35,7 +35,9 @@ public class User {
     // Check if enter a valid username, should be less than 16 digits
     public boolean isValidUserName(String user) {
         boolean validation = false;
-        //
+
+        if(user.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,16}$")) validation = true;
+
         return validation;
     }
 
@@ -43,7 +45,9 @@ public class User {
     // The password need to include at least a combination of letters and number
     public boolean isValidPassword(String user) {
         boolean validation = false;
-        //
+
+        if(user.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) validation = true;
+
         return validation;
     }
 
