@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignUpPage extends AppCompatActivity {
     private EditText mUserNameEditText, mPasswordEditText;
     private DatabaseReference dbUser;
+    private String uName, pswd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +43,14 @@ public class SignUpPage extends AppCompatActivity {
                 startActivity(backToLogIn);
             }
         });
+
+
     }
 
+    private void getEditString(){
+        uName = mUserNameEditText.getText().toString().trim();
+        pswd = mPasswordEditText.getText().toString().trim();
+    }
 
 
 
