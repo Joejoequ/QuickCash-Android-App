@@ -48,10 +48,10 @@ public class SignUpPage extends AppCompatActivity {
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (user.isValidUserName(uName)){
-                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(0-9, a-z, A-Z)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(user.isValidPassword(pswd)){
-                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(0-9, a-z, A-Z)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     dbUser.child(java.util.UUID.randomUUID().toString()).setValue(user);
