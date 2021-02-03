@@ -53,8 +53,8 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //User u = new User(mUserNameEditText.getText().toString().trim(),mPasswordEditText.getText().toString());
-                //dbUser.child(java.util.UUID.randomUUID().toString()).setValue(u);
+//                User u = new User(mUserNameEditText.getText().toString().trim(),mPasswordEditText.getText().toString());
+//                dbUser.child(java.util.UUID.randomUUID().toString()).setValue(u);
                 Intent switchSignUp = new Intent(LogIn.this, SignUpPage.class);
                 startActivity(switchSignUp);
             }
@@ -71,10 +71,7 @@ public class LogIn extends AppCompatActivity {
                 else if (user_password.isEmpty())
                     Toast.makeText(getApplicationContext(), "enter your password", Toast.LENGTH_SHORT).show();
                 else {
-
                     checkAccount(user_name, user_password);
-
-
                 }
             }
         });
@@ -84,7 +81,7 @@ public class LogIn extends AppCompatActivity {
 
 
     static public boolean connection() {
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference("Connection");  //.info/connected
 
         connectedRef.addValueEventListener(
                 new ValueEventListener() {
