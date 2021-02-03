@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,10 +39,25 @@ public class SignUpPage extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User u = new User(mUserNameEditText.getText().toString().trim(),mPasswordEditText.getText().toString());
-                dbUser.child(java.util.UUID.randomUUID().toString()).setValue(u);
-                Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
-                startActivity(backToLogIn);
+                getEditString();
+                User user = new User(uName, pswd);
+                if(TextUtils.isEmpty(uName)){
+                    Toast.makeText(SignUpPage.this, "Please enter your user name.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (TextUtils.isEmpty(pswd)){
+                    Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (user.isValidUserName(uName)){
+                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(0-9, a-z, A-Z)", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if(user.isValidPassword(pswd)){
+                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(0-9, a-z, A-Z)", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    dbUser.child(java.util.UUID.randomUUID().toString()).setValue(user);
+                    Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
+                    startActivity(backToLogIn);
+                }
             }
         });
 
@@ -52,6 +69,10 @@ public class SignUpPage extends AppCompatActivity {
         pswd = mPasswordEditText.getText().toString().trim();
     }
 
+
+//    private void isExistUserName(){
+//
+//    }
 
 
 }

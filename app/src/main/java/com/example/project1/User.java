@@ -32,25 +32,19 @@ public class User {
         this.userName = name;
     }
 
-    // Check if enter an empty userName
-    public boolean isEmptyUserName(User user) {
-        return true;
-    }
-
-    // Check if enter an empty password
-    public boolean isEmptyPassword(User user) {
-        return true;
-    }
-
     // Check if enter a valid username, should be less than 16 digits
-    public boolean isValidUserName(User user) {
-        return true;
+    public boolean isValidUserName(String user) {
+        boolean validation = false;
+        //
+        return validation;
     }
 
     // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
     // The password need to include at least a combination of letters and number
-    public boolean isValidPassword(User user) {
-        return true;
+    public boolean isValidPassword(String user) {
+        boolean validation = false;
+        //
+        return validation;
     }
 
 }
