@@ -31,22 +31,31 @@ public class User {
     public void changeName(String name) {
         this.userName = name;
     }
+    // Check if enter an empty userName
+    public boolean isEmptyUserName(User user) {
+        return true;
+    }
+
+    // Check if enter an empty password
+    public boolean isEmptyPassword(User user) {
+        return true;
+    }
 
     // Check if enter a valid username, should be less than 16 digits
-    public boolean isValidUserName(String user) {
+    public boolean isValidUserName(User user) {
         boolean validation = false;
 
-        if(user.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,16}$")) validation = true;
+        if(user.getUserName().matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,16}$")) validation = true;
 
         return validation;
     }
 
     // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
     // The password need to include at least a combination of letters and number
-    public boolean isValidPassword(String user) {
+    public boolean isValidPassword(User user) {
         boolean validation = false;
 
-        if(user.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) validation = true;
+        if(user.getPassword().matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) validation = true;
 
         return validation;
     }

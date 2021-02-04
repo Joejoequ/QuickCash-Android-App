@@ -47,10 +47,10 @@ public class SignUpPage extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(pswd)){
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (user.isValidUserName(uName)){
+                } else if (user.isValidUserName(user)){
                     Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
-                } else if(user.isValidPassword(pswd)){
+                } else if(user.isValidPassword(user)){
                     Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
