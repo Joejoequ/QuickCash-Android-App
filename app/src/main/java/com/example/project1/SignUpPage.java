@@ -47,14 +47,14 @@ public class SignUpPage extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(pswd)){
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (user.isValidUserName(user)){
-                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
+                } else if (!user.isValidUserName()){
+                    Toast.makeText(SignUpPage.this, "userPlease check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
-                } else if(user.isValidPassword(user)){
-                    Toast.makeText(SignUpPage.this, "Please check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
+                } else if(!user.isValidPassword()){
+                    Toast.makeText(SignUpPage.this, "pswPlease check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    dbUser.child(java.util.UUID.randomUUID().toString()).setValue(user);
+                    dbUser.child(user.userName).setValue(user);
                     Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
                     startActivity(backToLogIn);
                 }
