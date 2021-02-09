@@ -131,7 +131,7 @@ public class LogIn extends AppCompatActivity {
                             }
                         }
                     } else {
-                        Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogIn.this, "Incorrect UserName", Toast.LENGTH_SHORT).show();
                     }
 
                 }

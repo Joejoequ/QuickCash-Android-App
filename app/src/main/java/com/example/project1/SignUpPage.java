@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.internal.FallbackServiceBroker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +23,7 @@ public class SignUpPage extends AppCompatActivity {
     private DatabaseReference dbUser;
     private String uName, pswd;
     private FirebaseDatabase database;
-    private boolean isTaken = false;
+    private static boolean isTaken = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +125,27 @@ public class SignUpPage extends AppCompatActivity {
     public boolean isExistUserName(String username) {
 
         System.out.println("s1");
+        String pas="123456789";
         dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    isTaken = false;
+                if (dataSnapshot.exists()) {
+                    isTaken=true;
+
+//                    for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
+//                        User u = adSnapshot.getValue(User.class);
+//
+//                        if (u.password.equals(pas)) {
+//                            //should use unique UID later
+//                            isTaken=true;
+//
+//                        } else {
+//                            Toast.makeText(SignUpPage.this, "test", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
                 } else {
-                    isTaken = true;
+                    isTaken = false;
+
                 }
             }
 
@@ -139,6 +154,7 @@ public class SignUpPage extends AppCompatActivity {
                 Toast.makeText(SignUpPage.this, "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
             }
         });
+
         System.out.println(isTaken);
         return isTaken;
     }
