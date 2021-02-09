@@ -12,18 +12,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.internal.FallbackServiceBroker;
+import com.google.android.gms.common.util.JsonUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.ls.LSOutput;
+
+import javax.crypto.spec.PSource;
+
 public class SignUpPage extends AppCompatActivity {
     private EditText mUserNameEditText, mPasswordEditText;
     private DatabaseReference dbUser;
     private String uName, pswd;
-    private FirebaseDatabase database;
-    private static boolean isTaken = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,29 +50,28 @@ public class SignUpPage extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!LogIn.connection()) {
+                    Toast.makeText(getApplicationContext(), "Failed To Connect To Server \nPlease Check Your Settings", Toast.LENGTH_SHORT).show();
+                }
+                else{
                 getEditString();
                 User user = new User(uName, pswd);
                 if (TextUtils.isEmpty(uName)) {
-                    Toast.makeText(SignUpPage.this, "Please enter your user name.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPage.this, "Please enter your username.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (TextUtils.isEmpty(pswd)) {
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!isValidUserName()) {
-                    Toast.makeText(SignUpPage.this, "userPlease check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPage.this, "Your username must be a combination of numbers, lower or upper case letters(4-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!isValidPassword()) {
-                    Toast.makeText(SignUpPage.this, "pswPlease check your Password or your User name.(Must contain number, Lower and upper letters)", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (isExistUserName(uName) == true) {
-                    Toast.makeText(SignUpPage.this, "User name exist, please login.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPage.this, "Your password must be a combination of numbers, lower or upper case letters(8-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    Toast.makeText(SignUpPage.this, "Register complete.", Toast.LENGTH_SHORT).show();
-                    dbUser.child(user.userName).setValue(user);
-                    Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
-                    startActivity(backToLogIn);
+                    isExistUserName(uName);
                 }
+            }
             }
         });
 
@@ -122,60 +124,37 @@ public class SignUpPage extends AppCompatActivity {
     }
 
 
-    public boolean isExistUserName(String username) {
-
-        System.out.println("s1");
-        String pas="123456789";
+    public void isExistUserName(String username) {
         dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    isTaken=true;
 
-//                    for (DataSnapshot adSnapshot : dataSnapshot.getChildren()) {
-//                        User u = adSnapshot.getValue(User.class);
-//
-//                        if (u.password.equals(pas)) {
-//                            //should use unique UID later
-//                            isTaken=true;
-//
-//                        } else {
-//                            Toast.makeText(SignUpPage.this, "test", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
+                    Toast.makeText(SignUpPage.this, "User name exist", Toast.LENGTH_SHORT).show();
+
                 } else {
-                    isTaken = false;
+
+                    getEditString();
+                    User user = new User(uName, pswd);
+
+                    Toast.makeText(SignUpPage.this, "Register successfully.", Toast.LENGTH_SHORT).show();
+                    dbUser.child(user.userName).setValue(user);
+                    Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
+                    startActivity(backToLogIn);
 
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(SignUpPage.this, "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpPage.this, "DatabaseError, please try again later", Toast.LENGTH_SHORT).show();
             }
         });
 
-        System.out.println(isTaken);
-        return isTaken;
     }
-//        dbUser.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(!snapshot.hasChild(username)){
-//                    isTaken = true;
-//                } else if(snapshot.hasChild(username)){
-//                    isTaken = false;
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(SignUpPage.this, "Connection Error, Please try agin.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        System.out.println(isTaken);
-//        return isTaken;
-//    }
+
+
+
 
 
 }

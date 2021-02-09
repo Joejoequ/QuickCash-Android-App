@@ -67,9 +67,9 @@ public class LogIn extends AppCompatActivity {
                 String user_name = mUserNameEditText.getText().toString().trim();
                 String user_password = mPasswordEditText.getText().toString().trim();
                 if (user_name.isEmpty())
-                    Toast.makeText(getApplicationContext(), "enter your username", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Enter your username", Toast.LENGTH_SHORT).show();
                 else if (user_password.isEmpty())
-                    Toast.makeText(getApplicationContext(), "enter your password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
                 else {
                     checkAccount(user_name, user_password);
                 }
@@ -80,7 +80,7 @@ public class LogIn extends AppCompatActivity {
     }
 
 
-    static public boolean connection() {
+   public static boolean connection() {
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference("Connection");  //.info/connected
 
         connectedRef.addValueEventListener(
@@ -127,11 +127,11 @@ public class LogIn extends AppCompatActivity {
                                 loggedin(u.userName);
 
                             } else {
-                                Toast.makeText(LogIn.this, "Incorrect UserName or Password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LogIn.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
-                        Toast.makeText(LogIn.this, "Incorrect UserName", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogIn.this, "Incorrect username", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -153,7 +153,7 @@ public class LogIn extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("UserName",UserName);
         startActivity(intent);
-        Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
 
     }
 }
