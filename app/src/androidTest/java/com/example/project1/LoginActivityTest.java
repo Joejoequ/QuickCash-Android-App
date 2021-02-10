@@ -1,18 +1,12 @@
 package com.example.project1;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
-import android.content.Intent;
 
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,22 +15,14 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.Intents.intending;
-import static androidx.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static org.junit.Assert.assertEquals;
 
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -46,8 +32,6 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTest {
 
-    @Rule
-    public ActivityTestRule<LogIn> mActivityTestRule = new ActivityTestRule<>(LogIn.class);
 
     @Test
     public void useAppContext() {
@@ -57,65 +41,86 @@ public class LoginActivityTest {
         assertEquals("com.example.project1", appContext.getPackageName());
     }
 
+
+    @Rule
+    public IntentsTestRule<LogIn> mIntentTestRule = new IntentsTestRule<>(LogIn.class);
+    public ActivityScenarioRule<LogIn> myRule = new ActivityScenarioRule<>(LogIn.class);
+
+
+    /*** AT1:1**/
+    @Test
+    public void checkIfLoginPageIsShown() {
+        onView(withId(R.id.userName)).check(matches(withText("")));
+        onView(withId(R.id.password)).check(matches(withText("")));
+        onView(withId(R.id.toSignUp)).check(matches(withText("Sign up")));
+        onView(withId(R.id.loginBtn)).check(matches(withText("Log In")));
+    }
+
+
+    /*** AT1:2**/
     @Test
     public void EmptyLogin() {
+
         onView(withId(R.id.loginBtn)).perform(click());
-        onView(withText("enter your username"))
-                .inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView()))))
-                .check(matches(isDisplayed()));
+        onView(withId(R.id.status)).check(matches(withText("Enter your username")));
 
     }
-
+    /*** AT1:2**/
     @Test
     public void EmptyPassword() {
+
         onView(withId(R.id.userName)).perform(typeText("admin"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
-        onView(withText("enter your password"))
-                .inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView()))))
-                .check(matches(isDisplayed()));
+        onView(withId(R.id.status)).check(matches(withText("Enter your password")));
 
     }
-
+    /*** AT1:2**/
     @Test
-    public void UsernameNotExist() {
+    public void UsernameNotExist() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("texxsa"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("123456"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
-        onView(withText("Incorrect UserName or Password"))
-                .inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView()))))
-                .check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.status)).check(matches(withText("Incorrect username or password")));
 
     }
 
-
-
+    /*** AT1:2**/
     @Test
-    public void WrongPassword() {
-        onView(withId(R.id.userName)).perform(typeText("logintest"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("14234"), closeSoftKeyboard());
+    public void WrongPassword() throws InterruptedException {
+        onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("ff"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
-        onView(withText("Incorrect UserName or Password"))
-                .inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView()))))
-                .check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.status)).check(matches(withText("Incorrect username or password")));
 
     }
 
-    @Rule
-    public IntentsTestRule<LogIn> mIntentTestRule = new IntentsTestRule<LogIn>(LogIn.class);
-
-
+    /*** AT1:1**/
     @Test
     //if it will jump to MainActivity after login successfully
-    public void LoginSuccessfully() {
-        onView(withId(R.id.userName)).perform(typeText("logintest"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("123456"), closeSoftKeyboard());
+    public void LoginSuccess() throws InterruptedException {
+        onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("fefsfsef"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
+        Thread.sleep(1000);
         intended(hasComponent(MainActivity.class.getName()));
 
     }
 
+    /*** AT1:1**/
+    @Test
+    //if it will send information to MainActivity
+    public void LoginWithUserInformation() throws InterruptedException {
+        onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("fefsfsef"), closeSoftKeyboard());
+        onView(withId(R.id.loginBtn)).perform(click());
+        Thread.sleep(1000);
+        intended(hasExtra("UserName", "4444"));
 
+    }
 
+    
     @Test
     //if it will jump to SignUpPage after click the register button
     public void GotoRegister() {
@@ -124,17 +129,7 @@ public class LoginActivityTest {
 
         intended(hasComponent(SignUpPage.class.getName()));
 
-
-
     }
-
-
-
-
-
-
-
-
 
 
 }

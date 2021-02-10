@@ -9,16 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.database.ValueEventListener;
 
 public class LogIn extends AppCompatActivity {
@@ -26,6 +23,7 @@ public class LogIn extends AppCompatActivity {
     private EditText mUserNameEditText, mPasswordEditText;
     private Button mSigninButton;
     private Button switchToSignUp;
+    private TextView statusLabel;
     private DatabaseReference dbUser;
     static public boolean connection;
 
@@ -47,6 +45,7 @@ public class LogIn extends AppCompatActivity {
         mSigninButton = findViewById(R.id.loginBtn);
         dbUser = FirebaseDatabase.getInstance().getReference("User");
         switchToSignUp = findViewById(R.id.toSignUp);
+        statusLabel=findViewById(R.id.status);
 
 
         switchToSignUp.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +65,13 @@ public class LogIn extends AppCompatActivity {
 
                 String user_name = mUserNameEditText.getText().toString().trim();
                 String user_password = mPasswordEditText.getText().toString().trim();
-                if (user_name.isEmpty())
+                if (user_name.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Enter your username", Toast.LENGTH_SHORT).show();
-                else if (user_password.isEmpty())
+                statusLabel.setText("Enter your username");}
+                else if (user_password.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
-                else {
+                    statusLabel.setText("Enter your password");
+                }else {
                     checkAccount(user_name, user_password);
                 }
             }
@@ -81,7 +82,7 @@ public class LogIn extends AppCompatActivity {
 
 
    public static boolean connection() {
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference("Connection");  //.info/connected
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");  //
 
         connectedRef.addValueEventListener(
                 new ValueEventListener() {
@@ -127,11 +128,15 @@ public class LogIn extends AppCompatActivity {
                                 loggedin(u.userName);
 
                             } else {
+                                statusLabel.setText("Incorrect username or password");
                                 Toast.makeText(LogIn.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     } else {
-                        Toast.makeText(LogIn.this, "Incorrect username", Toast.LENGTH_SHORT).show();
+                        statusLabel.setText("Incorrect username or password");
+                        Toast.makeText(LogIn.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+
                     }
 
                 }
@@ -154,6 +159,7 @@ public class LogIn extends AppCompatActivity {
         intent.putExtra("UserName",UserName);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
+
 
     }
 }
