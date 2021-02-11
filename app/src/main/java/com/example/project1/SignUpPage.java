@@ -62,14 +62,14 @@ public class SignUpPage extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(pswd)) {
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (!isValidUserName()) {
+                } else if (!isValidUserName(uName)) {
                     Toast.makeText(SignUpPage.this, "Your username must be a combination of numbers, lower or upper case letters(4-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (!isValidPassword()) {
+                } else if (!isValidPassword(pswd)) {
                     Toast.makeText(SignUpPage.this, "Your password must be a combination of numbers, lower or upper case letters(8-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    isExistUserName(uName);
+                    isExistUserName(uName,pswd);
                 }
             }
             }
@@ -84,10 +84,10 @@ public class SignUpPage extends AppCompatActivity {
     }
 
     // Check if enter a valid username, should be less than 16 digits
-    public boolean isValidUserName() {
-        getEditString();
+    public boolean isValidUserName(String username) {
+        //getEditString();
         boolean validation = false;
-        char[] convert = uName.toCharArray();
+        char[] convert = username.toCharArray();
 
         if (convert.length <= 16 && convert.length >= 4) {
             int count = 0;
@@ -97,17 +97,17 @@ public class SignUpPage extends AppCompatActivity {
                     count++;
                 }
             }
-            if (count == uName.length()) validation = true;
+            if (count == username.length()) validation = true;
         }
 
         return validation;
     }
 
     // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
-    public boolean isValidPassword() {
-        getEditString();
+    public boolean isValidPassword(String password) {
+        //getEditString();
         boolean validation = false;
-        char[] convert = pswd.toCharArray();
+        char[] convert = password.toCharArray();
 
         if (convert.length <= 16 && convert.length >= 8) {
             int count = 0;
@@ -117,14 +117,14 @@ public class SignUpPage extends AppCompatActivity {
                     count++;
                 }
             }
-            if (count == pswd.length()) validation = true;
+            if (count == password.length()) validation = true;
         }
 
         return validation;
     }
 
 
-    public void isExistUserName(String username) {
+    public void isExistUserName(String username, String password) {
         dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -134,11 +134,11 @@ public class SignUpPage extends AppCompatActivity {
 
                 } else {
 
-                    getEditString();
-                    User user = new User(uName, pswd);
+                    //getEditString();
+                    User user = new User(username, password);
 
-                    Toast.makeText(SignUpPage.this, "Register successfully.", Toast.LENGTH_SHORT).show();
                     dbUser.child(user.userName).setValue(user);
+                    Toast.makeText(SignUpPage.this, "Register successfully.", Toast.LENGTH_SHORT).show();
                     Intent backToLogIn = new Intent(SignUpPage.this, LogIn.class);
                     startActivity(backToLogIn);
 
