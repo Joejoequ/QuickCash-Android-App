@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.internal.FallbackServiceBroker;
@@ -27,6 +28,7 @@ public class SignUpPage extends AppCompatActivity {
     private EditText mUserNameEditText, mPasswordEditText;
     private DatabaseReference dbUser;
     private String uName, pswd;
+    private TextView messageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class SignUpPage extends AppCompatActivity {
         mUserNameEditText = findViewById(R.id.userName);
         mPasswordEditText = findViewById(R.id.password);
         dbUser = FirebaseDatabase.getInstance().getReference("User");
+        messageView = findViewById(R.id.errorMessage);
 
         Button backToLogIn = findViewById(R.id.BacktoLogin);
         backToLogIn.setOnClickListener(new View.OnClickListener() {
@@ -57,15 +60,19 @@ public class SignUpPage extends AppCompatActivity {
                 getEditString();
                 User user = new User(uName, pswd);
                 if (TextUtils.isEmpty(uName)) {
+                    messageView.setText("Please enter your username.");
                     Toast.makeText(SignUpPage.this, "Please enter your username.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (TextUtils.isEmpty(pswd)) {
+                    messageView.setText("Please enter your user password.");
                     Toast.makeText(SignUpPage.this, "Please enter your user password.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!isValidUserName(uName)) {
+                    messageView.setText("Your username must be a combination of numbers, lower or upper case letters(4-16 characters)");
                     Toast.makeText(SignUpPage.this, "Your username must be a combination of numbers, lower or upper case letters(4-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!isValidPassword(pswd)) {
+                    messageView.setText("Your password must be a combination of numbers, lower or upper case letters(8-16 characters)");
                     Toast.makeText(SignUpPage.this, "Your password must be a combination of numbers, lower or upper case letters(8-16 characters)", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
@@ -85,7 +92,7 @@ public class SignUpPage extends AppCompatActivity {
 
     // Check if enter a valid username, should be less than 16 digits
     public boolean isValidUserName(String username) {
-        //getEditString();
+
         boolean validation = false;
         char[] convert = username.toCharArray();
 
@@ -105,7 +112,7 @@ public class SignUpPage extends AppCompatActivity {
 
     // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
     public boolean isValidPassword(String password) {
-        //getEditString();
+
         boolean validation = false;
         char[] convert = password.toCharArray();
 

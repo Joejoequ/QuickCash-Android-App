@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SignUpPageTest {
+public class SignUpPageUnitTest {
     static MainActivity mainActivity;
     static SignUpPage signUp;
     static User user;
