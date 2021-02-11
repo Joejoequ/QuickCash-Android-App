@@ -80,8 +80,7 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-
-   public static boolean connection() {
+    public static boolean connection() {
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");  //
 
         connectedRef.addValueEventListener(
@@ -105,7 +104,6 @@ public class LogIn extends AppCompatActivity {
                 }
         );
         return LogIn.connection;
-
     }
 
 

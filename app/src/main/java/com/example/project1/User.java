@@ -33,8 +33,5 @@ public class User {
     }
 
 
-    // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
-    // The password need to include at least a combination of letters and number
-
 
 }
