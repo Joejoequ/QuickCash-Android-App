@@ -2,25 +2,23 @@ package com.example.project1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -64,19 +62,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //when click "login" in the navigation bar, go to login activity
         Intent switchLogIn = new Intent(this, LogIn.class);
+        switchLogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_login:
                         startActivity(switchLogIn);
+
                         break;
                 }
                 return true;
             }
         });
 
-//after login and get user information
+        //after login and get user information
         if (UserName!=null){
         //update the user information in the navigation bar
             View mHeaderView = navigationView.getHeaderView(0);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
             MenuItem itemInfo = menuInfo.getItem(2);
-            itemInfo.setTitle("Logout");
+            itemInfo.setTitle(R.string.logoutBtn);
             }
 
     }
