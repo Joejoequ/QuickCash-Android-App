@@ -1,5 +1,8 @@
 package com.example.project1;
 
+/**
+ * This class stored all the user information
+ */
 public class User {
     public String userName;
     public String password;
@@ -12,6 +15,7 @@ public class User {
         this.userName = name;
         this.password = password;
     }
+
 
     public String getUserName() {
         return userName;

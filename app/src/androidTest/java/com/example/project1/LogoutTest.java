@@ -46,7 +46,9 @@ public class LogoutTest {
     public ActivityScenarioRule<LogIn> myRule = new ActivityScenarioRule<>(LogIn.class);
 
 
-
+    /**
+     *check if the menu item's title successfully change to "Logout"
+     */
     @Test
     public void checkIfLogoutBtnShown() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
@@ -60,10 +62,9 @@ public class LogoutTest {
         onView(withText(R.string.logoutBtn)).check(matches(withText("Logout")));
 
 
-
     }
 
-    /*** AT1:1**/
+    /*** AT2:2**/
     @Test
     public void checkIfLogoutBtnWorks() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
@@ -76,7 +77,7 @@ public class LogoutTest {
                 .perform(DrawerActions.open());
 
         //onView(withId(R.id.nav_view))
-                //.perform(NavigationViewActions.navigateTo(R.id.nav_setting));
+        //.perform(NavigationViewActions.navigateTo(R.id.nav_setting));
 
         onView(withText(R.string.logoutBtn)).perform(click());
         intended(hasComponent(LogIn.class.getName()));

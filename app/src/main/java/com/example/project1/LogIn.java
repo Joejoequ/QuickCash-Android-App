@@ -80,6 +80,10 @@ public class LogIn extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @return if the application is connected to firebase successfully
+     */
     public static boolean connection() {
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");  //
 
@@ -87,7 +91,7 @@ public class LogIn extends AppCompatActivity {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        //LogIn.connection= snapshot.getValue(Boolean.class);
+
                         LogIn.connection = false;
                         if (snapshot.getValue(Boolean.class) != null) {
 
@@ -106,7 +110,13 @@ public class LogIn extends AppCompatActivity {
         return LogIn.connection;
     }
 
-
+    /**
+     *
+     * @param username username to check
+     * @param password password to check
+     * if no such account then display error message for user
+     * if there exists an account in database then complete loggedin process
+     */
     public void checkAccount(String username, String password) {
 
         if (!connection()) {
@@ -122,7 +132,7 @@ public class LogIn extends AppCompatActivity {
                             User u = adSnapshot.getValue(User.class);
 
                             if (u.password.equals(password)) {
-                                //should use unique UID later
+
                                 loggedin(u.userName);
 
                             } else {
@@ -149,6 +159,11 @@ public class LogIn extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param UserName userName of the logged user
+     * move to MainActivity with User Information
+     */
     public void loggedin(String UserName) {
         mPasswordEditText.setText("");
         mUserNameEditText.setText("");

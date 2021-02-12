@@ -49,6 +49,7 @@ public class LoginActivityTest {
 
     /*** AT1:1**/
     @Test
+    //check if Text and button is successfully shown
     public void checkIfLoginPageIsShown() {
         onView(withId(R.id.userName)).check(matches(withText("")));
         onView(withId(R.id.password)).check(matches(withText("")));
@@ -59,6 +60,7 @@ public class LoginActivityTest {
 
     /*** AT1:2**/
     @Test
+    //check if there is an error message when username is empty
     public void EmptyLogin() {
 
         onView(withId(R.id.loginBtn)).perform(click());
@@ -67,6 +69,7 @@ public class LoginActivityTest {
     }
     /*** AT1:2**/
     @Test
+    //check if there is an error message when password is empty
     public void EmptyPassword() {
 
         onView(withId(R.id.userName)).perform(typeText("admin"), closeSoftKeyboard());
@@ -76,6 +79,7 @@ public class LoginActivityTest {
     }
     /*** AT1:2**/
     @Test
+    //check if it will login when username does not exist
     public void UsernameNotExist() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("texxsa"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("123456"), closeSoftKeyboard());
@@ -87,6 +91,7 @@ public class LoginActivityTest {
 
     /*** AT1:2**/
     @Test
+    //check if it will login when password is not correct
     public void WrongPassword() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("4444"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("ff"), closeSoftKeyboard());

@@ -1,8 +1,5 @@
 package com.example.project1;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,17 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.internal.FallbackServiceBroker;
-import com.google.android.gms.common.util.JsonUtils;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.ls.LSOutput;
-
-import javax.crypto.spec.PSource;
 
 public class SignUpPage extends AppCompatActivity {
     private EditText mUserNameEditText, mPasswordEditText;
@@ -85,12 +79,18 @@ public class SignUpPage extends AppCompatActivity {
 
     }
 
+
     private void getEditString() {
         uName = mUserNameEditText.getText().toString().trim();
         pswd = mPasswordEditText.getText().toString().trim();
     }
 
-    // Check if enter a valid username, should be less than 16 digits
+
+    /**
+     * Check if enter a valid username, should be less than 16 digits
+     * @param username username to validate
+     * @return true if the username is valid
+     */
     public boolean isValidUserName(String username) {
 
         boolean validation = false;
@@ -110,7 +110,13 @@ public class SignUpPage extends AppCompatActivity {
         return validation;
     }
 
-    // Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
+
+
+    /**
+     * Check if enter a valid password, should be no less than 8 digits, no more than 16 letters
+     * @param password password to validate
+     * @return true if password is valid
+     */
     public boolean isValidPassword(String password) {
 
         boolean validation = false;
@@ -130,7 +136,11 @@ public class SignUpPage extends AppCompatActivity {
         return validation;
     }
 
-
+    /**
+     * check if username exists in database
+     * @param username username to validate
+     * @param password password to validate
+     */
     public void isExistUserName(String username, String password) {
         dbUser.orderByChild("userName").equalTo(username).addValueEventListener(new ValueEventListener() {
             @Override
