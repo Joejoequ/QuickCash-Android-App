@@ -53,9 +53,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_login,R.id.nav_setting)
+                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -63,14 +64,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //when click "login" in the navigation bar, go to login activity
         Intent switchLogIn = new Intent(this, LogIn.class);
         switchLogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_login:
+                    case R.id.nav_login:{
                         startActivity(switchLogIn);
-
+                        break;}
+                    case R.id.nav_post:{
+                        navController.navigate(R.id.nav_post);
                         break;
+                    }
+
+                    case R.id.nav_home:{
+                        navController.navigate(R.id.nav_home);
+                        break;
+                    }
+                    case R.id.nav_mypost:{
+                        navController.navigate(R.id.nav_my_post);
+                        break;
+                    }
+                    case R.id.nav_mytask:{
+                        navController.navigate(R.id.nav_my_task);
+                        break;
+                    }
+
+
+
                 }
                 return true;
             }
@@ -84,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            mDrawerHeaderTitle.setText("Welcome!   "+UserName);
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
-            MenuItem itemInfo = menuInfo.getItem(2);
+            MenuItem itemInfo = menuInfo.getItem(4);
             itemInfo.setTitle(R.string.logoutBtn);
             }
 

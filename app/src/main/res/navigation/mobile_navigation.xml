@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.project1.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_post"
+        android:name="com.example.project1.ui.post.PostFragment"
+        android:label="@string/label_post"
+        tools:layout="@layout/fragment_post" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.project1.ui.login.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_my_post"
+        android:name="com.example.project1.ui.mypost.MyPostFragment"
+        android:label="@string/label_mypost"
+        tools:layout="@layout/fragment_mypost" />
+
+    <fragment
+        android:id="@+id/nav_my_task"
+        android:name="com.example.project1.ui.mytask.MyTaskFragment"
+        android:label="My Tasks"
+        tools:layout="@layout/fragment_mytask" />
 </navigation>

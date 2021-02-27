@@ -1,9 +1,10 @@
-package com.example.project1.ui.gallery;
+package com.example.project1.ui.post;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,22 +15,24 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project1.R;
 
-public class GalleryFragment extends Fragment {
+public class PostFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private PostViewModel postViewModel;
+    private Button postBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        postViewModel =
+                new ViewModelProvider(this).get(PostViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_post, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        postViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 }
