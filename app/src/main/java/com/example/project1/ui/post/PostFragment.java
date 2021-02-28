@@ -33,6 +33,7 @@ public class PostFragment extends Fragment {
             }
         });
 
+
         return root;
     }
 }
