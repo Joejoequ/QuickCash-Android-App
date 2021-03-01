@@ -25,11 +25,11 @@ public class PostFragment extends Fragment {
         postViewModel =
                 new ViewModelProvider(this).get(PostViewModel.class);
         View root = inflater.inflate(R.layout.fragment_post, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
+
         postViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
 
