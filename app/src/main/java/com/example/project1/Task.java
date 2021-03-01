@@ -32,5 +32,40 @@ public class Task {
     }
 
 
+    public String getFormattedPostDate(){
+        return "";
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public Date getWorkDate() {
+        return workDate;
+    }
+
+    public String getWorker() {
+        return worker;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getWage() {
+        return wage;
+    }
 
 }
