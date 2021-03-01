@@ -1,41 +1,57 @@
 package com.example.project1;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Task {
-     static   final int PUBLISHED=1;
-    static final int ACCEPTED=2;
-    static final int UNPAID=3;
-    static final int FINISHED=4;
+    static final int PUBLISHED = 1;
+    static final int ACCEPTED = 2;
+    static final int UNPAID = 3;
+    static final int FINISHED = 4;
 
-    public String taskId;
-    public String title;
-    public String description;
-    public Date workDate;
-    public Date postDate;
-    public int wage;
-    public String publisher;
-    public String worker;
-    public String status;
+    private String taskId;
+    private String title;
+    private String description;
+    private Date workDate;
+    private Date postDate;
+    private int wage;
+    private String publisher;
+    private String worker;
+    private int status;
 
-    public Task(String title, String description, Date workDate,int wage,String publisher){
+    public Task(String title, String description, Date workDate, int wage, String publisher) {
+        this.taskId = java.util.UUID.randomUUID().toString();
+        this.workDate = workDate;
+        this.title = title;
+        this.description = description;
+        this.postDate = new Date();
+        this.wage = wage;
+        this.publisher = publisher;
+        this.status = Task.PUBLISHED;
 
     }
 
 
-    public void acceptTask(String worker){
+    public void acceptTask(String worker) {
+        this.worker = worker;
+        this.status = ACCEPTED;
 
     }
 
-    public boolean available(){
-        return true;
+    public boolean available() {
+        return this.status == PUBLISHED && workDate.after(new Date());
     }
 
 
-    public String getFormattedPostDate(){
-        return "";
+    public String getFormattedPostDate() {
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
+        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
+        return ft.format(postDate);
     }
 
+
+    //getters and setters
     public String getTitle() {
         return title;
     }
@@ -52,7 +68,7 @@ public class Task {
         return worker;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 

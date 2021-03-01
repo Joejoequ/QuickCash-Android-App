@@ -1,5 +1,7 @@
 package com.example.project1;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -8,7 +10,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TaskUnitTest {
      static Task t;
@@ -24,7 +28,7 @@ public static void setup(){
 
         @Test
         public void testTitle() {
-           //assertEquals("title",t.getTitle());
+           assertEquals("title",t.getTitle());
 
         }
 
@@ -61,22 +65,39 @@ public static void setup(){
     }
     @Test
     public void testAcceptTask() {
+        Task task=new Task("title","description",workDate,50,"publisher");
         String worker="Bob";
-        t.acceptTask(worker);
-        assertEquals(Task.ACCEPTED,t.getStatus());
-        assertEquals(worker,t.getWorker());
+        task.acceptTask(worker);
+        assertEquals(Task.ACCEPTED,task.getStatus());
+        assertEquals(worker,task.getWorker());
     }
 
     @Test
     public void testAvailable() {
-        assertEquals(Task.PUBLISHED,t.getStatus());
+        assertTrue(t.available());
+    }
+
+    @Test
+    public void testAcceptedTask() {
+        Task task=new Task("title","description",workDate,50,"publisher");
+        task.acceptTask("BOB");
+        assertFalse(task.available());
+    }
+
+    @Test
+    public void testPastDueTask() {
+        Date pastDate=new Date();
+        pastDate.setYear(100); //set year to 2000
+        Task pastTask=new Task("title","description",pastDate,50,"publisher");
+        assertFalse(pastTask.available());
     }
 
     @Test
     public void testFormattedPostDate() {
+    
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        assertEquals(ft.format(workDate),t.getFormattedPostDate());
+        assertEquals(ft.format(currentDate),t.getFormattedPostDate());
     }
 
 
