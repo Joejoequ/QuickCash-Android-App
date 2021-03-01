@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project1.R;
+import com.example.project1.Task;
+
+import java.util.ArrayList;
 
 public class MyPostFragment extends Fragment {
 
@@ -34,4 +37,10 @@ public class MyPostFragment extends Fragment {
 
         return root;
     }
+
+    // array list to store all post task for a given user
+    ArrayList<Task> myPost = new ArrayList<>();
+
+
+
 }
