@@ -1,6 +1,8 @@
 package com.example.project1;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Task {
     static final int PUBLISHED = 1;
@@ -43,7 +45,9 @@ public class Task {
 
 
     public String getFormattedPostDate() {
-        return "";
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
+        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
+        return ft.format(postDate);
     }
 
 

@@ -89,15 +89,15 @@ public static void setup(){
         Date pastDate=new Date();
         pastDate.setYear(100); //set year to 2000
         Task pastTask=new Task("title","description",pastDate,50,"publisher");
-
         assertFalse(pastTask.available());
     }
 
     @Test
     public void testFormattedPostDate() {
+    
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        assertEquals(ft.format(workDate),t.getFormattedPostDate());
+        assertEquals(ft.format(currentDate),t.getFormattedPostDate());
     }
 
 
