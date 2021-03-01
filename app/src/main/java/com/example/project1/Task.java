@@ -30,7 +30,10 @@ public class Task {
         this.wage = wage;
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
+    }
 
+    public Task(Date post) {
+        this.postDate  = post;
     }
 
 
