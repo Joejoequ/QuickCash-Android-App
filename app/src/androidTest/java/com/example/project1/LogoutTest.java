@@ -61,7 +61,6 @@ public class LogoutTest {
 
         onView(withText(R.string.logoutBtn)).check(matches(withText("Logout")));
 
-
     }
 
     /*** AT2:2**/
