@@ -44,11 +44,12 @@ public class Task {
     }
 
 
-    public String getFormattedDate(Date d) {
+    public String getFormattedPostDate() {
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        return ft.format(d);
+        return ft.format(postDate);
     }
+
 
 
     //getters and setters
