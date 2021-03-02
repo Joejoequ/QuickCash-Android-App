@@ -94,10 +94,10 @@ public static void setup(){
 
     @Test
     public void testFormattedPostDate() {
-    
+
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        assertEquals(ft.format(currentDate),t.getFormattedPostDate());
+        assertEquals(ft.format(currentDate).substring(0,18),t.getFormattedPostDate().substring(0,18));
     }
 
 

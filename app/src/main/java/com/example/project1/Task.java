@@ -52,6 +52,7 @@ public class Task {
     }
 
 
+
     //getters and setters
     public String getTitle() {
         return title;
@@ -85,6 +86,11 @@ public class Task {
         return wage;
     }
 
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override
         public int compare(Task t1, Task t2) {
@@ -97,5 +103,6 @@ public class Task {
             }
         }
     };
+
 
 }
