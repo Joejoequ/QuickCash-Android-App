@@ -103,7 +103,7 @@ public static void setup(){
         d.setMinutes(30);
         d.setSeconds(23);
 
-        assertEquals("2021-03-01 07:30:23 AST",t.getFormattedDate(d));
+        assertEquals("2021-03-01 07:30:23",t.getFormattedDate(d).substring(0,19));
     }
 
 
