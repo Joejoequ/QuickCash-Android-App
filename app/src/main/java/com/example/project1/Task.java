@@ -1,6 +1,7 @@
 package com.example.project1;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -85,7 +86,23 @@ public class Task {
         return wage;
     }
 
+
     public Date getPostDate() {
         return postDate;
     }
+
+    public static Comparator<Task> postDateSort = new Comparator<Task>() {
+        @Override
+        public int compare(Task t1, Task t2) {
+
+            // if task 1 is posted before t2
+            if (t1.postDate.compareTo(t2.postDate) > 0) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    };
+
+
 }
