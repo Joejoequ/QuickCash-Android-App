@@ -86,22 +86,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     }
                     case R.id.nav_mypost:{
-                        if (UserName == null) {
-                            navController.navigate(R.id.nav_not_logged);
-                        }
-                        else{
-                        navController.navigate(R.id.nav_my_post);}
+                        //if (UserName == null) {
+                        //    navController.navigate(R.id.nav_not_logged);
+                        //}
+                        //else{
+                        navController.navigate(R.id.nav_my_post);
                         break;
                     }
                     case R.id.nav_mytask:{
-                        if (UserName == null) {
-                            navController.navigate(R.id.nav_not_logged);
-                        }
-                        else{
-                        navController.navigate(R.id.nav_my_task);}
+                        //if (UserName == null) {
+                          //  navController.navigate(R.id.nav_not_logged);
+                        //}
+                        //else{
+                        navController.navigate(R.id.nav_my_task);
                         break;
                     }
-                    
+
                 }
                 return true;
             }
