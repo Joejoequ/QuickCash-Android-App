@@ -44,10 +44,10 @@ public class Task {
     }
 
 
-    public String getFormattedPostDate() {
+    public String getFormattedDate(Date d) {
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        return ft.format(postDate);
+        return ft.format(d);
     }
 
 
@@ -84,4 +84,7 @@ public class Task {
         return wage;
     }
 
+    public Date getPostDate() {
+        return postDate;
+    }
 }
