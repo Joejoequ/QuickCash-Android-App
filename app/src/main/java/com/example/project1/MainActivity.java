@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+    public  String getUserName(){
+        return this.UserName;
+    }
 
 
 
