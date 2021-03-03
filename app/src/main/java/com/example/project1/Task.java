@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Task {
-    static final int PUBLISHED = 1;
-    static final int ACCEPTED = 2;
-    static final int UNPAID = 3;
-    static final int FINISHED = 4;
+    static final String PUBLISHED = "Published";
+    static final String ACCEPTED = "Accepted";
+    static final String UNPAID = "Unpaid";
+    static final String FINISHED = "Finished";
 
     private String taskId;
     private String title;
@@ -19,7 +19,7 @@ public class Task {
     private int wage;
     private String publisher;
     private String worker;
-    private int status;
+    private String status;
 
     public Task(String title, String description, Date workDate, int wage, String publisher) {
         this.taskId = java.util.UUID.randomUUID().toString();
@@ -41,17 +41,21 @@ public class Task {
     }
 
     public boolean available() {
-        return this.status == PUBLISHED && workDate.after(new Date());
+        return this.status .equals( PUBLISHED) && workDate.after(new Date());
     }
 
 
-    public String getFormattedPostDate() {
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
+    public String getPostDate() {
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
         return ft.format(postDate);
     }
 
+    public String getWorkDate() {
 
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+        return ft.format(workDate);
+    }
 
     //getters and setters
     public String getTitle() {
@@ -62,15 +66,12 @@ public class Task {
         return taskId;
     }
 
-    public Date getWorkDate() {
-        return workDate;
-    }
 
     public String getWorker() {
         return worker;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -87,9 +88,7 @@ public class Task {
     }
 
 
-    public Date getPostDate() {
-        return postDate;
-    }
+
 
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override
