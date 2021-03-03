@@ -91,8 +91,10 @@ public class PostFragmentTest {
         onView(withId(R.id.taskDescription)).perform(typeText("Example Description\n\nExample\n\nExample"), closeSoftKeyboard());
         onView(withId(R.id.taskWage)).perform(typeText("50"), closeSoftKeyboard());
         onView(withId(R.id.selectDate)).perform(click());
-        onView(withText("Choose")).perform(click());
+
+        onView(withText("OK")).perform(click());
         onView(withId(R.id.postBtn)).perform(click());
+
         //check status
         onView(withId(R.id.postStatus)).check(matches(withText("Post Successfully")));
     }
@@ -121,7 +123,9 @@ public class PostFragmentTest {
 
         onView(withId(R.id.taskTitle)).perform(typeText("exampleTitle"), closeSoftKeyboard());
 
+        onView(withId(R.id.postBtn)).perform(click());
+
         //check status
-        onView(withId(R.id.postStatus)).check(matches(withText("Please Fill All Blanks")));
+        onView(withId(R.id.postStatus)).check(matches(withText("Please Fill all the Blanks")));
     }
 }

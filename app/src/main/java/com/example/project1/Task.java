@@ -41,20 +41,19 @@ public class Task {
     }
 
     public boolean available() {
-        return this.status == PUBLISHED && workDate.after(new Date());
+        return this.status .equals( PUBLISHED) && workDate.after(new Date());
     }
 
 
     public String getPostDate() {
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
         return ft.format(postDate);
     }
 
     public String getWorkDate() {
 
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss zzz");
-        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
         return ft.format(workDate);
     }
 

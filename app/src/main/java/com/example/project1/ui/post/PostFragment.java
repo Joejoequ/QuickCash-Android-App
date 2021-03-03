@@ -68,7 +68,6 @@ public class PostFragment extends Fragment {
         EditText descriptionEdit = root.findViewById(R.id.taskDescription);
         EditText wageEdit = root.findViewById(R.id.taskWage);
 
-
         selectDate = root.findViewById(R.id.selectDate);
         postBtn = root.findViewById(R.id.postBtn);
         date = root.findViewById(R.id.dateView);
@@ -84,12 +83,13 @@ public class PostFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String desc = String.format("%d-%2d-%2d", year, month + 1, day).replace(" ", "0");
-                        ;
+
                         date.setText(desc);
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
                         simpleDateFormat.setTimeZone(TimeZone.getDefault());
                         try {
-                            workDate = simpleDateFormat.parse(desc + " 23:59:59");
+                            workDate = simpleDateFormat.parse(desc+" 23:59:59");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -116,6 +116,13 @@ public class PostFragment extends Fragment {
                 if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null) {
                     Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
                     dbTask.child(t.getTaskId()).setValue(t);
+                    Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
+                    statusLabel.setText("Post Successfully");
+                    titleEdit.setText("");
+                    descriptionEdit.setText("");
+                    wageEdit.setText("");
+                    workDate=null;
+                    date.setText("");
                 } else {
                     Toast.makeText(getContext(), "Please Fill all the Blanks", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Please Fill all the Blanks");
