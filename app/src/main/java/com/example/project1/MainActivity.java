@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login)
+                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -73,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(switchLogIn);
                         break;}
                     case R.id.nav_post:{
-                        navController.navigate(R.id.nav_post);
+                        if (UserName == null) {
+                            navController.navigate(R.id.nav_not_logged);
+                        }
+                        else{
+                        navController.navigate(R.id.nav_post);}
                         break;
                     }
 
@@ -82,15 +86,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     }
                     case R.id.nav_mypost:{
+                        //if (UserName == null) {
+                        //    navController.navigate(R.id.nav_not_logged);
+                        //}
+                        //else{
                         navController.navigate(R.id.nav_my_post);
                         break;
                     }
                     case R.id.nav_mytask:{
+                        //if (UserName == null) {
+                          //  navController.navigate(R.id.nav_not_logged);
+                        //}
+                        //else{
                         navController.navigate(R.id.nav_my_task);
                         break;
                     }
-
-
 
                 }
                 return true;

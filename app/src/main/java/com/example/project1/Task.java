@@ -30,10 +30,7 @@ public class Task {
         this.wage = wage;
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
-    }
 
-    public Task(Date post) {
-        this.postDate  = post;
     }
 
 
@@ -53,6 +50,7 @@ public class Task {
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
         return ft.format(postDate);
     }
+
 
 
     //getters and setters
@@ -89,6 +87,10 @@ public class Task {
     }
 
 
+    public Date getPostDate() {
+        return postDate;
+    }
+
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override
         public int compare(Task t1, Task t2) {
@@ -101,4 +103,6 @@ public class Task {
             }
         }
     };
+
+
 }

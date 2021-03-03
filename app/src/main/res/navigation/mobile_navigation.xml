@@ -28,4 +28,10 @@
         android:name="com.example.project1.ui.mytask.MyTaskFragment"
         android:label="My Tasks"
         tools:layout="@layout/fragment_mytask" />
+
+    <fragment
+        android:id="@+id/nav_not_logged"
+        android:name="com.example.project1.ui.NotLoggedFragment"
+        android:label="Not Logged"
+        tools:layout="@layout/fragment_not_logged" />
 </navigation>
