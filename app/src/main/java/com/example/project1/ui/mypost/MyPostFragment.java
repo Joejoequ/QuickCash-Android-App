@@ -38,42 +38,60 @@ public class MyPostFragment extends Fragment {
     private MyPostViewModel MypostViewModel;
     private DatabaseReference dbTask;
     private Button refresh;
-    private ArrayList<Task> myPost;
+    public ArrayList<Task> myPost = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MypostViewModel =
                 new ViewModelProvider(this).get(MyPostViewModel.class);
         View root = inflater.inflate(R.layout.fragment_mypost, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        MypostViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        final TextView textView = root.findViewById(R.id.text_slideshow);
+//        MypostViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
+
 
         // get firebase reference
         dbTask = FirebaseDatabase.getInstance().getReference();
 
-        // array list to store all post task for a given user
-        ArrayList<Task> myPost = new ArrayList<>();
+
         // get the current logged user
         MainActivity activity = (MainActivity) getActivity();
         String userName = activity.getUserName();
 
-        // sort all task base on the post data
-        myPost = getPostTask(userName);
-        Collections.sort(myPost, Task.postDateSort);
-        PostAAdapter postTaskAdaptor = new PostAAdapter(getContext());
 
-        // write the adaptor into
-        ListView taskList = root.findViewById(R.id.tasklistView);
-        taskList.setAdapter(postTaskAdaptor);
+        // myPost = getPostTask(userName);
+
+
+        // testing code for UI  list view display
+//        Date currentDate=new Date();
+//        Date workDate=new Date();
+//        workDate.setMonth(6);
+//        Date workDate2=new Date();
+//        workDate2.setMonth(7);
+//        Task temp1 = new Task("title","description",workDate,50,"publisher");
+//        myPost.add(temp1);
+//        Task temp2 = new Task("title2","description2",workDate2,10,"publisher2");
+//        myPost.add(temp2);
+
+        if (myPost.isEmpty()) {
+            Toast.makeText(getContext(), "no post", Toast.LENGTH_LONG).show();
+        } else {
+            Collections.sort(myPost, Task.postDateSort);
+
+            // write the adaptor into
+            ListView taskList = root.findViewById(R.id.tasklistView);
+            taskList.setAdapter(new PostAAdapter(getContext(), myPost));
+
+        }
+
         return root;
     }
 
-    public ArrayList<Task> getPostTask(String user) {
+    public ArrayList<Task> getPostTask(String user) { ///debug
         ArrayList<Task> userTask = new ArrayList<>();
         Query query = dbTask.child("Task").orderByChild("publisher").equalTo(user);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,7 +112,7 @@ public class MyPostFragment extends Fragment {
                 } else {
                     // The user has not posted any task
                     String message = user + "has not posted any task yet";
-                    Toast.makeText(getContext(), "message", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -107,49 +125,54 @@ public class MyPostFragment extends Fragment {
     }
 
     class PostAAdapter extends BaseAdapter {
+        private ArrayList<Task> postTaskView;
 
-        private Context context;
+        //private Context context;
         private LayoutInflater inflater;
 
-        public PostAAdapter(Context context) {
-            this.context = context;
+        public PostAAdapter(Context context, ArrayList<Task> tasklist) {
+            //this.context = context;
+            inflater = LayoutInflater.from(context);
+            postTaskView = tasklist;
         }
 
         @Override
         public int getCount() {
-            return myPost.size();
+            //return myPost == null? 0 : myPost.size();
+            return postTaskView.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return null;
+            //return null;
+            return postTaskView.get(i);
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
-            Task t = myPost.get(position);
-            ViewHolder myView = null;
-            if (myView == null) {
-                myView = new ViewHolder();
+            //Task t = myPost.get(position);
+            ViewHolder myView;
+            if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
-                myView.taskTitle = (TextView)view.findViewById(R.id.taskTitle);
+                myView = new ViewHolder();
+                myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.edit = (Button)view.findViewById(R.id.editTask);
+                myView.edit = (Button)view.findViewById(R.id.editButton);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
             }
 
             // write the task information into the textView
-            myView.taskTitle.setText(t.getTitle());
-            myView.workDay.setText(t.getWorkDate());
-            String salary = "Salary: " + String.valueOf(t.getWage());
+            myView.taskTitle.setText(postTaskView.get(position).getTitle());
+            myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
+            String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
             myView.salary.setText(salary);
             return view;
         }
