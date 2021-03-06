@@ -45,18 +45,20 @@ public class Task {
     }
 
 
-    public String getPostDate() {
+
+
+    public String formattedPostDate(){
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
         return ft.format(postDate);
     }
 
-    public String getWorkDate() {
 
+
+    public String formattedWorkDate(){
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
         return ft.format(workDate);
     }
-
     //getters and setters
     public String getTitle() {
         return title;
@@ -66,7 +68,14 @@ public class Task {
         return taskId;
     }
 
+    public Date getWorkDate() {
+        return workDate;
 
+    }
+    public Date getPostDate() {
+        return postDate;
+
+    }
     public String getWorker() {
         return worker;
     }

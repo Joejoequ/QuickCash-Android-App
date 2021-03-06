@@ -47,7 +47,7 @@ public static void setup(){
     public void testWorkDate() {
         String desc = String.format("%d-%2d-%2d", workDate.getYear()+1900, (workDate.getMonth()+1), workDate.getDate()).replace(" ", "0");
 
-        assertEquals(desc,t.getWorkDate());
+        assertEquals(desc,t.formattedWorkDate());
     }
 
     @Test
@@ -98,7 +98,7 @@ public static void setup(){
 
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
         ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        assertEquals(ft.format(currentDate).substring(0,18),t.getPostDate().substring(0,18));
+        assertEquals(ft.format(currentDate).substring(0,18),t.formattedPostDate().substring(0,18));
     }
 
 
