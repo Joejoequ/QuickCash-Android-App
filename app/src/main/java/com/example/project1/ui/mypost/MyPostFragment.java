@@ -63,7 +63,7 @@ public class MyPostFragment extends Fragment {
         String userName = activity.getUserName();
 
 
-        // myPost = getPostTask(userName);
+        myPost = getPostTask(userName);
 
 
         // testing code for UI  list view display
@@ -91,7 +91,7 @@ public class MyPostFragment extends Fragment {
         return root;
     }
 
-    public ArrayList<Task> getPostTask(String user) { ///debug
+    public ArrayList<Task> getPostTask(String user) {
         ArrayList<Task> userTask = new ArrayList<>();
         Query query = dbTask.child("Task").orderByChild("publisher").equalTo(user);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -99,12 +99,13 @@ public class MyPostFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-                        String title = taskSnapshot.child("title").getValue().toString();
-                        Date workDate = (Date)taskSnapshot.child("workDate").getValue();
-                        String description = taskSnapshot.child("description").getValue().toString();
-                        int wage = (int)taskSnapshot.child("wage").getValue();
-                        String publisher = taskSnapshot.child("publisher").getValue().toString();
-                        Task task = new Task(title,description,workDate,wage,publisher);
+//                        String title = taskSnapshot.child("title").getValue().toString();
+//                        Date workDate = (Date)taskSnapshot.child("workDate").getValue();
+//                        String description = taskSnapshot.child("description").getValue().toString();
+//                        int wage = (int)taskSnapshot.child("wage").getValue();
+//                        String publisher = taskSnapshot.child("publisher").getValue().toString();
+//                        Task task = new Task(title,description,workDate,wage,publisher);
+                        Task task = taskSnapshot.getValue(Task.class);
                         // append task to task list
                         userTask.add(task);
                     }
