@@ -106,6 +106,8 @@ public class MyPostFragment extends Fragment {
 //                        String publisher = taskSnapshot.child("publisher").getValue().toString();
 //                        Task task = new Task(title,description,workDate,wage,publisher);
                         Task task = taskSnapshot.getValue(Task.class);
+                        System.out.println(task.getTaskId());
+                        System.out.println(task.getWorkDate());
                         // append task to task list
                         userTask.add(task);
                     }
