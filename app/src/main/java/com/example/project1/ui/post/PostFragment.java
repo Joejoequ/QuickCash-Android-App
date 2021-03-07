@@ -72,7 +72,7 @@ public class PostFragment extends Fragment {
         postBtn = root.findViewById(R.id.postBtn);
         date = root.findViewById(R.id.dateView);
         statusLabel = root.findViewById(R.id.postStatus);
-        int yearInput, month, day;
+
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class PostFragment extends Fragment {
                         String desc = String.format("%d-%2d-%2d", year, month + 1, day).replace(" ", "0");
 
                         date.setText(desc);
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                         simpleDateFormat.setTimeZone(TimeZone.getDefault());
                         try {
