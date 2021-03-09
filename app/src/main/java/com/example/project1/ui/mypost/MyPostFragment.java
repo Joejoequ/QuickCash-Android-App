@@ -47,6 +47,13 @@ public class MyPostFragment extends Fragment {
         MypostViewModel =
                 new ViewModelProvider(this).get(MyPostViewModel.class);
         View root = inflater.inflate(R.layout.fragment_mypost, container, false);
+//        final TextView textView = root.findViewById(R.id.text_slideshow);
+//        MypostViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
 
 
         // get firebase reference
@@ -75,7 +82,15 @@ public class MyPostFragment extends Fragment {
         Query query = dbTask.child("Task").orderByChild("publisher").equalTo(userName);
         query.addListenerForSingleValueEvent(valueEventListener);
 
-         //Collections.sort(myPost, Task.postDateSort);
+       // if (myPost.isEmpty()) {
+         //   Toast.makeText(getContext(), "no post", Toast.LENGTH_LONG).show();
+        //} else {
+         //   Collections.sort(myPost, Task.postDateSort);
+
+            // write the adaptor into
+
+
+       // }
 
         return root;
     }
@@ -87,6 +102,12 @@ public class MyPostFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+//                        String title = taskSnapshot.child("title").getValue().toString();
+//                        Date workDate = (Date)taskSnapshot.child("workDate").getValue();
+//                        String description = taskSnapshot.child("description").getValue().toString();
+//                        int wage = (int)taskSnapshot.child("wage").getValue();
+//                        String publisher = taskSnapshot.child("publisher").getValue().toString();
+//                        Task task = new Task(title,description,workDate,wage,publisher);
                     Task task = taskSnapshot.getValue(Task.class);
                     System.out.println(task.getTaskId());
                     System.out.println(task.getWorkDate());
@@ -115,6 +136,7 @@ public class MyPostFragment extends Fragment {
         private LayoutInflater inflater;
 
         public PostAAdapter(Context context, ArrayList<Task> tasklist) {
+            //this.context = context;
             inflater = LayoutInflater.from(context);
             postTaskView = tasklist;
         }
@@ -138,7 +160,7 @@ public class MyPostFragment extends Fragment {
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
-
+            //Task t = myPost.get(position);
             ViewHolder myView;
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
