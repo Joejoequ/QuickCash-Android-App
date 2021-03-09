@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/editTask"
+    android:id="@+id/tasklistLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,11 +32,6 @@
             android:text="salary"
             android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="64dp"
-            android:layout_height="25dp"
-            android:text="Edit" />
     </LinearLayout>
 
 </RelativeLayout>

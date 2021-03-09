@@ -1,7 +1,9 @@
 package com.example.project1.ui.mypost;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.MainActivity;
+import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -47,13 +51,7 @@ public class MyPostFragment extends Fragment {
         MypostViewModel =
                 new ViewModelProvider(this).get(MyPostViewModel.class);
         View root = inflater.inflate(R.layout.fragment_mypost, container, false);
-//        final TextView textView = root.findViewById(R.id.text_slideshow);
-//        MypostViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+
 
 
         // get firebase reference
@@ -82,15 +80,8 @@ public class MyPostFragment extends Fragment {
         Query query = dbTask.child("Task").orderByChild("publisher").equalTo(userName);
         query.addListenerForSingleValueEvent(valueEventListener);
 
-       // if (myPost.isEmpty()) {
-         //   Toast.makeText(getContext(), "no post", Toast.LENGTH_LONG).show();
-        //} else {
+
          //   Collections.sort(myPost, Task.postDateSort);
-
-            // write the adaptor into
-
-
-       // }
 
         return root;
     }
@@ -165,10 +156,10 @@ public class MyPostFragment extends Fragment {
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
+                myView.taskListLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.edit = (Button)view.findViewById(R.id.editButton);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -179,15 +170,24 @@ public class MyPostFragment extends Fragment {
             myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
             String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
             myView.salary.setText(salary);
+            myView.taskListLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), PostDetail.class);
+                    intent.putExtra("taskTitle", postTaskView.get(position).getTitle());
+                    intent.putExtra("taskDes", postTaskView.get(position).getDescription());
+                    getContext().startActivity(intent);
+                }
+            });
             return view;
         }
     }
 
    class ViewHolder {
+        private RelativeLayout taskListLayout;
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
-        private Button edit;
    }
 
 
