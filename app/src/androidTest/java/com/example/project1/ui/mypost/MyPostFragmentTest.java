@@ -31,6 +31,6 @@ public class MyPostFragmentTest {
     public void checkLoggedMyPostPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText("My Post")).perform(click());
-        onView(withId(R.id.refresh)).check(matches(isDisplayed()));
+        onView(withId(R.id.tasklistView)).check(matches(isDisplayed()));
     }
 }
