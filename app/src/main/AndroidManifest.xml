@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
         <activity android:name=".LogIn"></activity>
+        <activity android:name=".PostDetail"
+            android:parentActivityName=".MainActivity"
+            android:label="Detail"/>
         <activity android:name=".SignUpPage" />
         <activity
             android:name=".MainActivity"
