@@ -12,6 +12,7 @@ public class Task {
     static final String ACCEPTED = "Accepted";
     static final String UNPAID = "Unpaid";
     static final String FINISHED = "Finished";
+    static final String NOWORKER = "Does Not Be Accepted Yet";
 
     private String taskId;
     private String title;
@@ -35,7 +36,7 @@ public class Task {
         this.wage = wage;
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
-
+        this.worker = Task.NOWORKER;
 
     }
 

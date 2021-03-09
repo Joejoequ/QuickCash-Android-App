@@ -176,6 +176,12 @@ public class MyPostFragment extends Fragment {
                     Intent intent = new Intent(getContext(), PostDetail.class);
                     intent.putExtra("taskTitle", postTaskView.get(position).getTitle());
                     intent.putExtra("taskDes", postTaskView.get(position).getDescription());
+                    intent.putExtra("postDay", postTaskView.get(position).formattedPostDate());
+                    intent.putExtra("workDay", postTaskView.get(position).formattedWorkDate());
+                    intent.putExtra("wage", String.valueOf(postTaskView.get(position).getWage()));
+                    intent.putExtra("publisher", postTaskView.get(position).getPublisher());
+                    intent.putExtra("worker", postTaskView.get(position).getWorker());
+                    intent.putExtra("status", postTaskView.get(position).getStatus());
                     getContext().startActivity(intent);
                 }
             });
