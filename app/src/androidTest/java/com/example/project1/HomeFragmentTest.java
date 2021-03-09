@@ -25,7 +25,6 @@ public class HomeFragmentTest {
     @Test
     public void checkLoggedMyPostPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("Home")).perform(click());
         onView(withId(R.id.HomeSearchView)).check(matches(isDisplayed()));
         onView(withId(R.id.HomeListView)).check(matches(isDisplayed()));
     }
