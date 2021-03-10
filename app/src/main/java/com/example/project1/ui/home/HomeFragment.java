@@ -76,4 +76,15 @@ public class HomeFragment extends Fragment {
     public ArrayList getAllTask(){
         return allTitles;
     }
+    public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
+        ArrayList<Task> afterCompare = new ArrayList<>();
+
+        for(int i = 0; i<tasks.size(); i++){
+            if(tasks.get(i).getTitle().contains(keyword)){
+                afterCompare.add(tasks.get(i));
+            }
+        }
+
+        return afterCompare;
+    }
 }
