@@ -1,11 +1,7 @@
-package com.example.project1.ui.mypost;
+package com.example.project1;
 
-import androidx.annotation.ContentView;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-
-import com.example.project1.MainActivity;
-import com.example.project1.R;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,17 +16,16 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.*;
 
-public class MyPostFragmentTest {
+public class HomeFragmentTest {
+
     @Rule
     public ActivityScenarioRule<MainActivity> myRule = new ActivityScenarioRule<>(MainActivity.class);
-
 
     @Test
     public void checkLoggedMyPostPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("My Post")).perform(click());
-        onView(withId(R.id.tasklistView)).check(matches(isDisplayed()));
+        onView(withId(R.id.HomeSearchView)).check(matches(isDisplayed()));
+        onView(withId(R.id.HomeListView)).check(matches(isDisplayed()));
     }
 }

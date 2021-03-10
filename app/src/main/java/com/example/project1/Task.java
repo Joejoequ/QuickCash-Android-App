@@ -1,5 +1,7 @@
 package com.example.project1;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -10,6 +12,7 @@ public class Task {
     static final String ACCEPTED = "Accepted";
     static final String UNPAID = "Unpaid";
     static final String FINISHED = "Finished";
+    static final String NOWORKER = "Does Not Be Accepted Yet";
 
     private String taskId;
     private String title;
@@ -20,6 +23,9 @@ public class Task {
     private String publisher;
     private String worker;
     private String status;
+    public Task(){
+
+    }
 
     public Task(String title, String description, Date workDate, int wage, String publisher) {
         this.taskId = java.util.UUID.randomUUID().toString();
@@ -30,6 +36,7 @@ public class Task {
         this.wage = wage;
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
+        this.worker = Task.NOWORKER;
 
     }
 
@@ -68,14 +75,29 @@ public class Task {
         return taskId;
     }
 
-    public Date getWorkDate() {
-        return workDate;
+    public String getWorkDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
+
+        return simpleDateFormat.format(workDate);
 
     }
-    public Date getPostDate() {
-        return postDate;
+    public void setWorkDate(String workDate) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
+        this.workDate=simpleDateFormat.parse(workDate);
+    }
+
+    public String getPostDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
+
+        return simpleDateFormat.format(postDate);
 
     }
+
+    public void setPostDate(String postDate) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
+        this.postDate=simpleDateFormat.parse(postDate);
+    }
+
     public String getWorker() {
         return worker;
     }
