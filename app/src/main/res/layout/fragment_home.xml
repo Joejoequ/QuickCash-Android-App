@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,7 +21,7 @@
         >-->
 
     <SearchView
-        android:id="@+id/HomeSearchView"
+        android:id="@+id/mainSearchView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
@@ -33,7 +34,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="visible" />
-
 
 
 </LinearLayout>

@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +35,12 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
+    public ArrayList<Task> allTitle2 = new ArrayList<>();
+    private PostAAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -43,28 +48,49 @@ public class HomeFragment extends Fragment {
         Query query = dbTask.child("Task").orderByChild("publisher");
         query.addListenerForSingleValueEvent(valueEventListener);
 
-        return root;
+        adapter = new PostAAdapter(getContext(), allTitles);
+        ListView taskList = root.findViewById(R.id.HomeListView);
+        SearchView search = root.findViewById(R.id.mainSearchView);
+        taskList.setAdapter(adapter);
 
+        /*allTitles.remove(1);*/
+        adapter.notifyDataSetChanged();
+        adapter = new PostAAdapter(getContext(), allTitle2);
+        taskList.setAdapter(adapter);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList result = Search(getAllTask(),query);
+
+                adapter = new PostAAdapter(getContext(), result);
+                taskList.setAdapter(adapter);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
+        return root;
     }
+
+
 
     ValueEventListener valueEventListener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-//                        String title = taskSnapshot.child("title").getValue().toString();
-//                        Date workDate = (Date)taskSnapshot.child("workDate").getValue();
-//                        String description = taskSnapshot.child("description").getValue().toString();
-//                        int wage = (int)taskSnapshot.child("wage").getValue();
-//                        String publisher = taskSnapshot.child("publisher").getValue().toString();
-//                        Task task = new Task(title,description,workDate,wage,publisher);
+
                     Task task = taskSnapshot.getValue(Task.class);
                     System.out.println("11111111111111111111111"+task.getTaskId());
                     System.out.println(task.getWorkDate());
                     // append task to task list
                     allTitles.add(task);
                 }
-
+                adapter.notifyDataSetChanged();
             } else {
                 System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
                 // The user has not posted any task
@@ -79,9 +105,12 @@ public class HomeFragment extends Fragment {
         }
     };
 
+
+
     public ArrayList getAllTask(){
         return allTitles;
     }
+
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
@@ -93,6 +122,8 @@ public class HomeFragment extends Fragment {
 
         return afterCompare;
     }
+
+
 
     class PostAAdapter extends BaseAdapter {
         private ArrayList<Task> postTaskView;
