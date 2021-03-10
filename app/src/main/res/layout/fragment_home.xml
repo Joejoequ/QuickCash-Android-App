@@ -8,9 +8,20 @@
     tools:context=".ui.home.HomeFragment">
 
 
+    <!-- <SearchView
+        android:layout_marginTop="@dimen/y20"
+        android:id="@+id/search_view"
+        app:queryHint="请输入姓名或身份证号"
+        android:layout_width="@dimen/x1000"
+        android:layout_height="@dimen/y100"
+        android:layout_toLeftOf="@id/rl_search"
+        android:layout_toRightOf="@id/rl_leftBtn"
+        android:background="@drawable/bg_cursor_gray"
+        >-->
+
     <SearchView
         android:id="@+id/HomeSearchView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
         android:queryHint="Search a Task"
