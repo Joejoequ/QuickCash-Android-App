@@ -1,4 +1,4 @@
-package com.example.project1.ui.post;
+package com.example.project1.ui.edit;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -21,12 +21,19 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
+import com.example.project1.ui.post.PostViewModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.junit.Before;
 
@@ -36,7 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class PostFragment extends Fragment {
+public class EditFragment extends Fragment {
 
     private PostViewModel postViewModel;
     private Button selectDate;
@@ -46,36 +53,35 @@ public class PostFragment extends Fragment {
     private TextView date;
     private DatabaseReference dbTask;
     private TextView statusLabel;
+    private Task editTask;
+    private EditText titleEdit;
+    private EditText descriptionEdit;
+    private EditText wageEdit;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        postViewModel =
-                new ViewModelProvider(this).get(PostViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_post, container, false);
 
-        postViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
+        View root = inflater.inflate(R.layout.fragment_edit, container, false);
 
-            }
-        });
-
-        
+        String editTaskId=getArguments().getString("taskId");
         dbTask = FirebaseDatabase.getInstance().getReference("Task");
         MainActivity parentActivity = (MainActivity) getActivity();
         userName = parentActivity.getUserName();
 
-        EditText titleEdit = root.findViewById(R.id.taskTitle);
-        EditText descriptionEdit = root.findViewById(R.id.taskDescription);
-        EditText wageEdit = root.findViewById(R.id.taskWage);
+        Query query = dbTask.orderByChild("taskId").equalTo(editTaskId);
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+        titleEdit = root.findViewById(R.id.editTitle);
+        descriptionEdit = root.findViewById(R.id.editDescription);
+        wageEdit = root.findViewById(R.id.editWage);
 
 
 
-        selectDate = root.findViewById(R.id.selectDate);
-        postBtn = root.findViewById(R.id.postBtn);
-        date = root.findViewById(R.id.dateView);
-        statusLabel = root.findViewById(R.id.postStatus);
+        selectDate = root.findViewById(R.id.editSelectDate);
+        postBtn = root.findViewById(R.id.editBtn);
+        date = root.findViewById(R.id.editDateView);
+        statusLabel = root.findViewById(R.id.editStatus);
 
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +111,6 @@ public class PostFragment extends Fragment {
                 picker.setMinDate(System.currentTimeMillis() - 1000);
                 dateDialog.show();
 
-
             }
         });
 
@@ -120,16 +125,15 @@ public class PostFragment extends Fragment {
                 if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null) {
                     
                     
-                    Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
-                    dbTask.child(t.getTaskId()).setValue(t);
-                    Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
-                    statusLabel.setText("Post Successfully");
-                    titleEdit.setText("");
-                    descriptionEdit.setText("");
-                    wageEdit.setText("");
-                    workDate=null;
+                    editTask.setTitle(title);
+                    editTask.setDescription(description);
+                    editTask.setWage(Integer.parseInt(wage));
+                    dbTask.child(editTask.getTaskId()).setValue(editTask);
+                    Toast.makeText(getContext(), "Edit Successfully", Toast.LENGTH_SHORT).show();
+                    statusLabel.setText("Edit Successfully");
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.nav_home);
 
-                    date.setText("");
                 } else {
                     Toast.makeText(getContext(), "Please Fill all the Blanks", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Please Fill all the Blanks");
@@ -138,8 +142,31 @@ public class PostFragment extends Fragment {
             }
         });
 
+
+
         return root;
     }
+    ValueEventListener valueEventListener=new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
 
+
+                    editTask = taskSnapshot.getValue(Task.class);
+                    titleEdit.setText(editTask.getTitle());
+                    descriptionEdit.setText(editTask.getDescription());
+                    wageEdit.setText(String.valueOf(editTask.getWage()));
+
+                }
+
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+        }
+    };
 
 }
