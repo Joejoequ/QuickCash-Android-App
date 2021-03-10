@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -96,6 +97,7 @@ public class MyPostFragment extends Fragment {
     ValueEventListener valueEventListener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            myPost.clear();
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
 //                        String title = taskSnapshot.child("title").getValue().toString();
@@ -195,9 +197,7 @@ public class MyPostFragment extends Fragment {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putString("taskId",postTaskView.get(position).getTaskId());
-                    bundle.putString("wage", String.valueOf(postTaskView.get(position).getWage()));
-                    bundle.putString("description",postTaskView.get(position).getDescription());
-                    bundle.putString("title", postTaskView.get(position).getTitle());
+
 
                     NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                     navController.navigate(R.id.nav_edit,bundle);
