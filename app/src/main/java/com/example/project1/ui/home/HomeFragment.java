@@ -1,17 +1,24 @@
 package com.example.project1.ui.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.Task;
+import com.example.project1.ui.mypost.MyPostFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,5 +92,63 @@ public class HomeFragment extends Fragment {
         }
 
         return afterCompare;
+    }
+
+    class PostAAdapter extends BaseAdapter {
+        private ArrayList<Task> postTaskView;
+
+        private LayoutInflater inflater;
+
+        public PostAAdapter(Context context, ArrayList<Task> tasklist) {
+            inflater = LayoutInflater.from(context);
+            postTaskView = tasklist;
+        }
+
+        @Override
+        public int getCount() {
+            //return myPost == null? 0 : myPost.size();
+            return postTaskView.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            //return null;
+            return postTaskView.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+
+            ViewHolder myView;
+            if (view == null) {
+                view = inflater.inflate(R.layout.task_item, null);
+                myView = new ViewHolder();
+                myView.taskTitle = (TextView)view.findViewById(R.id.Title);
+                myView.workDay = (TextView)view.findViewById(R.id.workday);
+                myView.salary = (TextView)view.findViewById(R.id.Salary);
+                view.setTag(myView);
+            } else {
+                myView = (ViewHolder) view.getTag();
+            }
+
+            // write the task information into the textView
+            myView.taskTitle.setText(postTaskView.get(position).getTitle());
+            myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
+            String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
+            myView.salary.setText(salary);
+
+            return view;
+        }
+    }
+
+    class ViewHolder {
+        private TextView taskTitle;
+        private TextView workDay;
+        private TextView salary;
     }
 }
