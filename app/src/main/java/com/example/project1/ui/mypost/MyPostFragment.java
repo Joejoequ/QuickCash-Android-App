@@ -67,18 +67,18 @@ public class MyPostFragment extends Fragment {
         taskList.setAdapter(adapter);
 
         // testing code for UI  list view display
-//        Date currentDate=new Date();
-//        Date workDate=new Date();
-//        workDate.setMonth(6);
-//        Date workDate2=new Date();
-//        workDate2.setMonth(7);
-//        Task temp1 = new Task("title","description",workDate,50,"publisher");
-//        myPost.add(temp1);
-//        Task temp2 = new Task("title2","description2",workDate2,10,"publisher2");
-//        myPost.add(temp2);
+        Date currentDate=new Date();
+        Date workDate=new Date();
+        workDate.setMonth(6);
+        Date workDate2=new Date();
+        workDate2.setMonth(7);
+        Task temp1 = new Task("title","description",workDate,50,"publisher");
+        myPost.add(temp1);
+        Task temp2 = new Task("title2","description2",workDate2,10,"publisher2");
+        myPost.add(temp2);
 
-        Query query = dbTask.child("Task").orderByChild("publisher").equalTo(userName);
-        query.addListenerForSingleValueEvent(valueEventListener);
+        //Query query = dbTask.child("Task").orderByChild("publisher").equalTo(userName);
+        //query.addListenerForSingleValueEvent(valueEventListener);
 
 
          //   Collections.sort(myPost, Task.postDateSort);
@@ -88,7 +88,7 @@ public class MyPostFragment extends Fragment {
 
 
 
-    ValueEventListener valueEventListener=new ValueEventListener() {
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
