@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private DatabaseReference dbTask = FirebaseDatabase.getInstance().getReference();;
+    private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,11 +32,10 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-   /*     Query query = dbTask.child("Task").orderByChild("publisher");
-        query.addListenerForSingleValueEvent(valueEventListener);
-*/
+        dbTask= FirebaseDatabase.getInstance().getReference();
         Query query = dbTask.child("Task").orderByChild("publisher");
         query.addListenerForSingleValueEvent(valueEventListener);
+
         return root;
 
     }
