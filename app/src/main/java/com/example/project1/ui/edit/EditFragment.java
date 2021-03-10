@@ -1,4 +1,4 @@
-package com.example.project1.ui.post;
+package com.example.project1.ui.edit;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
+import com.example.project1.ui.post.PostViewModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,7 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class PostFragment extends Fragment {
+public class EditFragment extends Fragment {
 
     private PostViewModel postViewModel;
     private Button selectDate;
@@ -50,16 +51,9 @@ public class PostFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        postViewModel =
-                new ViewModelProvider(this).get(PostViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_post, container, false);
 
-        postViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
+        View root = inflater.inflate(R.layout.fragment_edit, container, false);
 
-            }
-        });
 
         
         dbTask = FirebaseDatabase.getInstance().getReference("Task");

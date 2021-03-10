@@ -118,6 +118,10 @@ public class Task {
         return wage;
     }
 
+    public void setTaskId(String id){
+        this.taskId=id;
+    }
+
 
 
 

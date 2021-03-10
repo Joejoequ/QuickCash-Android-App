@@ -15,7 +15,11 @@
         android:id="@+id/nav_post"
         android:name="com.example.project1.ui.post.PostFragment"
         android:label="@string/label_post"
-        tools:layout="@layout/fragment_post" />
+        tools:layout="@layout/fragment_post" >
+        <argument
+            android:name="editTaskId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_my_post"
@@ -34,4 +38,10 @@
         android:name="com.example.project1.ui.NotLoggedFragment"
         android:label="Not Logged"
         tools:layout="@layout/fragment_not_logged" />
+
+    <fragment
+        android:id="@+id/nav_edit"
+        android:name="com.example.project1.ui.edit.EditFragment"
+        android:label="Edit Your Post"
+        tools:layout="@layout/fragment_edit" />
 </navigation>
