@@ -23,7 +23,8 @@ public class Task {
     private String publisher;
     private String worker;
     private String status;
-    public Task(){
+
+    public Task() {
 
     }
 
@@ -48,24 +49,15 @@ public class Task {
     }
 
     public boolean available() {
-        return this.status .equals( PUBLISHED) && workDate.after(new Date());
+        return this.status.equals(PUBLISHED) && workDate.after(new Date());
     }
 
 
-
-
-    public String formattedPostDate(){
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss zzz");
-        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        return ft.format(postDate);
+    public String formattedWorkDate() {
+        //in "yyyy-mm-dd" format
+        return DateProcessor.dateToString(workDate).substring(0, 10);
     }
 
-
-
-    public String formattedWorkDate(){
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-        return ft.format(workDate);
-    }
     //getters and setters
     public String getTitle() {
         return title;
@@ -80,9 +72,10 @@ public class Task {
         return DateProcessor.dateToString(workDate);
 
     }
+
     public void setWorkDate(String workDate) throws ParseException {
 
-        this.workDate=DateProcessor.stringToDate(workDate);
+        this.workDate = DateProcessor.stringToDate(workDate);
     }
 
     public String getPostDate() {
@@ -94,7 +87,7 @@ public class Task {
 
     public void setPostDate(String postDate) throws ParseException {
 
-        this.postDate=DateProcessor.stringToDate(postDate);
+        this.postDate = DateProcessor.stringToDate(postDate);
     }
 
     public String getWorker() {
@@ -117,8 +110,8 @@ public class Task {
         return wage;
     }
 
-    public void setTaskId(String id){
-        this.taskId=id;
+    public void setTaskId(String id) {
+        this.taskId = id;
     }
 
     public void setDescription(String description) {
