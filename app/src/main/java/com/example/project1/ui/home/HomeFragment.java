@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         /*allTitles.remove(1);*/
         adapter.notifyDataSetChanged();
-        adapter = new PostAAdapter(getContext(), allTitle2);
+        adapter = new PostAAdapter(getContext(), allTitles);
         taskList.setAdapter(adapter);
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
