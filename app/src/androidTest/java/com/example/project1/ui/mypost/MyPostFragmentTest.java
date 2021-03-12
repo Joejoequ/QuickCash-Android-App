@@ -28,6 +28,14 @@ public class MyPostFragmentTest {
 
 
     @Test
+    public void checkUnloggedMyPostPage() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText("My Post")).perform(click());
+        onView(withId(R.id.tasklistView)).check(doesNotExist());
+        onView(withId(R.id.loginPrompt)).check(matches(withText("Please Login First")));
+    }
+
+    @Test
     public void checkLoggedMyPostPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText("My Post")).perform(click());
