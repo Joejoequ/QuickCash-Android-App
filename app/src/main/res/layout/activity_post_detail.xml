@@ -25,8 +25,8 @@
 
     <LinearLayout
         android:id="@+id/taskDetailLayout"
-        android:layout_width="412dp"
-        android:layout_height="590dp"
+        android:layout_width="398dp"
+        android:layout_height="574dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

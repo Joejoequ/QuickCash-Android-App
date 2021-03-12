@@ -94,7 +94,7 @@ public class MyPostFragment extends Fragment {
 
 
 
-    ValueEventListener valueEventListener=new ValueEventListener() {
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             myPost.clear();

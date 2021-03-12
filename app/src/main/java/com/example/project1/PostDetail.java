@@ -2,14 +2,10 @@ package com.example.project1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.project1.ui.post.PostFragment;
 
 public class PostDetail extends AppCompatActivity {
     String taskTitle;
@@ -21,35 +17,31 @@ public class PostDetail extends AppCompatActivity {
     String taskWorker;
     String taskStatus;
 
+    TextView title;
+    TextView description;
+    TextView postDay;
+    TextView workDay;
+    TextView wage;
+    TextView publisher;
+    TextView worker;
+    TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        TextView title = findViewById(R.id.taskDetailTitle);
-        TextView description = findViewById(R.id.taskDetailDescription);
-        TextView postDay = findViewById(R.id.taskPostDay);
-        TextView workDay = findViewById(R.id.taskWorkDay);
-        TextView wage = findViewById(R.id.taskWageDetail);
-        TextView publisher = findViewById(R.id.taskPublisherDetail);
-        TextView worker = findViewById(R.id.taskWorkerDetail);
-        TextView status = findViewById(R.id.taskStatus);
-
+        title = findViewById(R.id.taskDetailTitle);
+        description = findViewById(R.id.taskDetailDescription);
+        postDay = findViewById(R.id.taskPostDay);
+        workDay = findViewById(R.id.taskWorkDay);
+        wage = findViewById(R.id.taskWageDetail);
+        publisher = findViewById(R.id.taskPublisherDetail);
+        worker = findViewById(R.id.taskWorkerDetail);
+        status = findViewById(R.id.taskStatus);
 
         getTaskData();
-        title.setText(taskTitle);
-        description.setText(taskDescription);
-        postDay.setText(taskPostDay);
-        workDay.setText(taskWorkDay);
-        wage.setText(taskWage);
-        publisher.setText(taskPublisher);
-        worker.setText(taskWorker);
-        status.setText(taskStatus);
-
-
-
-
+        setTaskData();
     }
 
 
@@ -61,7 +53,13 @@ public class PostDetail extends AppCompatActivity {
             taskWorkDay = "Work Day: " + getIntent().getStringExtra("workDay");
             taskWage = "Wages: " + getIntent().getStringExtra("wage");
             taskPublisher = "Publisher: " + getIntent().getStringExtra("publisher");
-            taskWorker = "Worker: " + getIntent().getStringExtra("worker");
+            String assignWorker;
+            if (getIntent().getStringExtra("worker") == null) {
+                assignWorker = Task.NOWORKER;
+            } else {
+                assignWorker =  getIntent().getStringExtra("worker");
+            }
+            taskWorker = "Worker: " + assignWorker;
             taskStatus = "Task Status: " + getIntent().getStringExtra("status");
 
         } else {
@@ -81,5 +79,17 @@ public class PostDetail extends AppCompatActivity {
 
         return hasData;
     }
+
+    public void setTaskData() {
+        title.setText(taskTitle);
+        description.setText(taskDescription);
+        postDay.setText(taskPostDay);
+        workDay.setText(taskWorkDay);
+        wage.setText(taskWage);
+        publisher.setText(taskPublisher);
+        worker.setText(taskWorker);
+        status.setText(taskStatus);
+    }
+
 
 }

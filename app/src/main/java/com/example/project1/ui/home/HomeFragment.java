@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         /*allTitles.remove(1);*/
         adapter.notifyDataSetChanged();
-        adapter = new PostAAdapter(getContext(), allTitle2);
+        adapter = new PostAAdapter(getContext(), allTitles);
         taskList.setAdapter(adapter);
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
@@ -165,6 +165,7 @@ public class HomeFragment extends Fragment {
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
+                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 Button editButton=(Button)view.findViewById(R.id.editBtn);
                 editButton.setVisibility(View.GONE);
                 view.setTag(myView);
@@ -177,12 +178,28 @@ public class HomeFragment extends Fragment {
             myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
             String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
             myView.salary.setText(salary);
+            myView.homeTaskLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), PostDetail.class);
+                    intent.putExtra("taskTitle", postTaskView.get(position).getTitle());
+                    intent.putExtra("taskDes", postTaskView.get(position).getDescription());
+                    intent.putExtra("postDay", postTaskView.get(position).getPostDate());
+                    intent.putExtra("workDay", postTaskView.get(position).formattedWorkDate());
+                    intent.putExtra("wage", String.valueOf(postTaskView.get(position).getWage()));
+                    intent.putExtra("publisher", postTaskView.get(position).getPublisher());
+                    intent.putExtra("worker", postTaskView.get(position).getWorker());
+                    intent.putExtra("status", postTaskView.get(position).getStatus());
+                    getContext().startActivity(intent);
+                }
+            });
 
             return view;
         }
     }
 
     class ViewHolder {
+        private RelativeLayout homeTaskLayout;
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
