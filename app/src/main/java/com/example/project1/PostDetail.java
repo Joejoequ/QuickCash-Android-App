@@ -25,7 +25,6 @@ public class PostDetail extends AppCompatActivity {
     TextView publisher;
     TextView worker;
     TextView status;
-    Button editButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class PostDetail extends AppCompatActivity {
         publisher = findViewById(R.id.taskPublisherDetail);
         worker = findViewById(R.id.taskWorkerDetail);
         status = findViewById(R.id.taskStatus);
-        editButton = findViewById(R.id.taskEdit);
 
         getTaskData();
         setTaskData();
