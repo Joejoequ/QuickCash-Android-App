@@ -76,26 +76,25 @@ public class Task {
     }
 
     public String getWorkDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        return simpleDateFormat.format(workDate);
+        return DateProcessor.dateToString(workDate);
 
     }
     public void setWorkDate(String workDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.workDate=simpleDateFormat.parse(workDate);
+
+        this.workDate=DateProcessor.stringToDate(workDate);
     }
 
     public String getPostDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        return simpleDateFormat.format(postDate);
+
+        return DateProcessor.dateToString(postDate);
 
     }
 
     public void setPostDate(String postDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.postDate=simpleDateFormat.parse(postDate);
+
+        this.postDate=DateProcessor.stringToDate(postDate);
     }
 
     public String getWorker() {
