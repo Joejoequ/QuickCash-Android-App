@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
+import com.example.project1.TaskPersistence;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,8 +62,7 @@ public class PostFragment extends Fragment {
             }
         });
 
-        
-        dbTask = FirebaseDatabase.getInstance().getReference("Task");
+
         MainActivity parentActivity = (MainActivity) getActivity();
         userName = parentActivity.getUserName();
 
@@ -121,7 +121,8 @@ public class PostFragment extends Fragment {
                     
                     
                     Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
-                    dbTask.child(t.getTaskId()).setValue(t);
+                    TaskPersistence persistence=new TaskPersistence(t);
+                    persistence.saveToDatabase("Task");
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Post Successfully");
                     titleEdit.setText("");
