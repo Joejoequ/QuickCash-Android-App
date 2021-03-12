@@ -184,7 +184,7 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getContext(), PostDetail.class);
                     intent.putExtra("taskTitle", postTaskView.get(position).getTitle());
                     intent.putExtra("taskDes", postTaskView.get(position).getDescription());
-                    intent.putExtra("postDay", postTaskView.get(position).formattedPostDate());
+                    intent.putExtra("postDay", postTaskView.get(position).getPostDate());
                     intent.putExtra("workDay", postTaskView.get(position).formattedWorkDate());
                     intent.putExtra("wage", String.valueOf(postTaskView.get(position).getWage()));
                     intent.putExtra("publisher", postTaskView.get(position).getPublisher());
