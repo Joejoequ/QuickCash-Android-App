@@ -1,10 +1,6 @@
 package com.example.project1.ui.post;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,11 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
-import com.example.project1.TaskPersistence;
+import com.example.project1.DatabasePersistence;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.junit.Before;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -121,7 +113,7 @@ public class PostFragment extends Fragment {
                     
                     
                     Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
-                    TaskPersistence persistence=new TaskPersistence(t);
+                    DatabasePersistence persistence=new DatabasePersistence(t);
                     persistence.saveToDatabase("Task");
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Post Successfully");
