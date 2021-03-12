@@ -76,26 +76,25 @@ public class Task {
     }
 
     public String getWorkDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        return simpleDateFormat.format(workDate);
+        return DateProcessor.dateToString(workDate);
 
     }
     public void setWorkDate(String workDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.workDate=simpleDateFormat.parse(workDate);
+
+        this.workDate=DateProcessor.stringToDate(workDate);
     }
 
     public String getPostDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        return simpleDateFormat.format(postDate);
+
+        return DateProcessor.dateToString(postDate);
 
     }
 
     public void setPostDate(String postDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.postDate=simpleDateFormat.parse(postDate);
+
+        this.postDate=DateProcessor.stringToDate(postDate);
     }
 
     public String getWorker() {
@@ -118,8 +117,21 @@ public class Task {
         return wage;
     }
 
+    public void setTaskId(String id){
+        this.taskId=id;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public void setWage(int wage) {
+        this.wage = wage;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override

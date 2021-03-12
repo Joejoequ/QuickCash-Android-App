@@ -79,11 +79,6 @@
             android:text="task status"
             android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/taskEdit"
-            android:layout_width="166dp"
-            android:layout_height="35dp"
-            android:text="Edit" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

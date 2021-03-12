@@ -18,14 +18,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.Task;
+import com.example.project1.ui.mytask.MyTaskFragment;
+import com.example.project1.ui.post.PostFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -91,6 +97,7 @@ public class MyPostFragment extends Fragment {
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            myPost.clear();
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
 //                        String title = taskSnapshot.child("title").getValue().toString();
@@ -100,8 +107,6 @@ public class MyPostFragment extends Fragment {
 //                        String publisher = taskSnapshot.child("publisher").getValue().toString();
 //                        Task task = new Task(title,description,workDate,wage,publisher);
                     Task task = taskSnapshot.getValue(Task.class);
-                    System.out.println(task.getTaskId());
-                    System.out.println(task.getWorkDate());
                     // append task to task list
                     myPost.add(task);
                 }
@@ -160,6 +165,7 @@ public class MyPostFragment extends Fragment {
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
+                myView.editBtn=view.findViewById(R.id.editBtn);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -185,6 +191,20 @@ public class MyPostFragment extends Fragment {
                     getContext().startActivity(intent);
                 }
             });
+
+            myView.editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("taskId",postTaskView.get(position).getTaskId());
+
+
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.nav_edit,bundle);
+
+
+                }
+            });
             return view;
         }
     }
@@ -194,6 +214,7 @@ public class MyPostFragment extends Fragment {
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
+        private Button editBtn;
    }
 
 
