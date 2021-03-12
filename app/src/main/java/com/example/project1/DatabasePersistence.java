@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DatabasePersistence implements TaskPersistence{
 
-    
+
     public boolean save(Task t) {
         DatabaseReference dbTask = FirebaseDatabase.getInstance().getReference("Task");
         dbTask.child(t.getTaskId()).setValue(t);

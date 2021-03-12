@@ -113,8 +113,8 @@ public class PostFragment extends Fragment {
                     
                     
                     Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
-                    DatabasePersistence persistence=new DatabasePersistence(t);
-                    persistence.saveToDatabase("Task");
+                    DatabasePersistence persistence=new DatabasePersistence();
+                    persistence.save(t);
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Post Successfully");
                     titleEdit.setText("");
