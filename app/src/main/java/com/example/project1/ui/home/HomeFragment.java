@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -43,6 +44,8 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+
 
         dbTask= FirebaseDatabase.getInstance().getReference();
         Query query = dbTask.child("Task").orderByChild("publisher");
@@ -162,6 +165,8 @@ public class HomeFragment extends Fragment {
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
+                Button editButton=(Button)view.findViewById(R.id.editBtn);
+                editButton.setVisibility(View.GONE);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -181,5 +186,6 @@ public class HomeFragment extends Fragment {
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
+
     }
 }
