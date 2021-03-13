@@ -88,16 +88,13 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
 
                     Task task = taskSnapshot.getValue(Task.class);
-                    System.out.println("11111111111111111111111"+task.getTaskId());
-                    System.out.println(task.getWorkDate());
-                    // append task to task list
+
                     allTitles.add(task);
                 }
                 adapter.notifyDataSetChanged();
             } else {
-                System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-                // The user has not posted any task
-                String message =  "has not posted any task yet";
+
+                String message =  "No data here.";
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         }
