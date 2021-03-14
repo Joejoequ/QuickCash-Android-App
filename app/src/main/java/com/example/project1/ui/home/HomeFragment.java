@@ -104,11 +104,13 @@ public class HomeFragment extends Fragment {
     };
 
 
-    public ArrayList getAllTask() {
+    //Get all task title in server.
+    public ArrayList getAllTask(){
         return allTitles;
     }
 
-    public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword) {
+    //Receive task title from getAllTask and find title that match with keyword.
+    public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
         for (int i = 0; i < tasks.size(); i++) {
