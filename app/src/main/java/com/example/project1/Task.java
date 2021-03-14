@@ -41,20 +41,30 @@ public class Task {
 
     }
 
-
+    /**
+     *
+     * @param worker the userName of worker who accepts this task
+     */
     public void acceptTask(String worker) {
         this.worker = worker;
         this.status = ACCEPTED;
 
     }
 
+    /**
+     * if task has been accepted or expired, then it is not available to user
+     * @return if this task is available for user to see
+     */
     public boolean available() {
         return this.status.equals(PUBLISHED) && workDate.after(new Date());
     }
 
-
+    /**
+     *
+     * @return the workDate in "yyyy-mm-dd" format
+     */
     public String formattedWorkDate() {
-        //in "yyyy-mm-dd" format
+
         return DateProcessor.dateToString(workDate).substring(0, 10);
     }
 
@@ -68,7 +78,6 @@ public class Task {
     }
 
     public String getWorkDate() {
-
         return DateProcessor.dateToString(workDate);
 
     }
@@ -125,6 +134,10 @@ public class Task {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    /**
+     * implement compare function for task according to date
+     */
 
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override
