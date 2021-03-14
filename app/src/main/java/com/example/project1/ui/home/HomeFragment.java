@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private DatabaseReference dbTask ;
+    private DatabaseReference dbTask;
     public ArrayList<Task> allTitles = new ArrayList<>();
     public ArrayList<Task> allTitle2 = new ArrayList<>();
     private PostAAdapter adapter;
@@ -46,8 +46,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-
-        dbTask= FirebaseDatabase.getInstance().getReference();
+        dbTask = FirebaseDatabase.getInstance().getReference();
         Query query = dbTask.child("Task").orderByChild("publisher");
         query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -61,9 +60,9 @@ public class HomeFragment extends Fragment {
         adapter = new PostAAdapter(getContext(), allTitles);
         taskList.setAdapter(adapter);
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {
-                ArrayList result = Search(getAllTask(),query);
+                ArrayList result = Search(getAllTask(), query);
 
                 adapter = new PostAAdapter(getContext(), result);
                 taskList.setAdapter(adapter);
@@ -80,8 +79,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-    ValueEventListener valueEventListener=new ValueEventListener() {
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
@@ -94,35 +92,33 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             } else {
 
-                String message =  "No data here.";
+                String message = "No data here.";
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_LONG).show();
         }
     };
 
 
-
-    public ArrayList getAllTask(){
+    public ArrayList getAllTask() {
         return allTitles;
     }
 
-    public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
+    public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword) {
         ArrayList<Task> afterCompare = new ArrayList<>();
 
-        for(int i = 0; i<tasks.size(); i++){
-            if(tasks.get(i).getTitle().contains(keyword)){
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTitle().contains(keyword)) {
                 afterCompare.add(tasks.get(i));
             }
         }
 
         return afterCompare;
     }
-
 
 
     class PostAAdapter extends BaseAdapter {
@@ -159,11 +155,11 @@ public class HomeFragment extends Fragment {
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
-                myView.taskTitle = (TextView)view.findViewById(R.id.Title);
-                myView.workDay = (TextView)view.findViewById(R.id.workday);
-                myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
-                Button editButton=(Button)view.findViewById(R.id.editBtn);
+                myView.taskTitle = (TextView) view.findViewById(R.id.Title);
+                myView.workDay = (TextView) view.findViewById(R.id.workday);
+                myView.salary = (TextView) view.findViewById(R.id.Salary);
+                myView.homeTaskLayout = (RelativeLayout) view.findViewById(R.id.tasklistLayout);
+                Button editButton = (Button) view.findViewById(R.id.editBtn);
                 editButton.setVisibility(View.GONE);
                 view.setTag(myView);
             } else {

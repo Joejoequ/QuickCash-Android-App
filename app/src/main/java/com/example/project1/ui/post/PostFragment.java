@@ -43,8 +43,7 @@ public class PostFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        postViewModel =
-                new ViewModelProvider(this).get(PostViewModel.class);
+        postViewModel = new ViewModelProvider(this).get(PostViewModel.class);
         View root = inflater.inflate(R.layout.fragment_post, container, false);
 
         postViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -63,12 +62,11 @@ public class PostFragment extends Fragment {
         EditText wageEdit = root.findViewById(R.id.taskWage);
 
 
-
         selectDate = root.findViewById(R.id.selectDate);
         postBtn = root.findViewById(R.id.postBtn);
         date = root.findViewById(R.id.dateView);
         statusLabel = root.findViewById(R.id.postStatus);
-
+//open a DatePickerDialog
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +83,7 @@ public class PostFragment extends Fragment {
 
                         simpleDateFormat.setTimeZone(TimeZone.getDefault());
                         try {
-                            workDate = simpleDateFormat.parse(desc+" 23:59:59");
+                            workDate = simpleDateFormat.parse(desc + " 23:59:59");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -101,7 +99,7 @@ public class PostFragment extends Fragment {
             }
         });
 
-
+//save the input Task in Firebase
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,17 +108,17 @@ public class PostFragment extends Fragment {
                 String wage = wageEdit.getText().toString().trim();
 
                 if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null) {
-                    
-                    
+
+
                     Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
-                    DatabasePersistence persistence=new DatabasePersistence();
+                    DatabasePersistence persistence = new DatabasePersistence();
                     persistence.save(t);
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Post Successfully");
                     titleEdit.setText("");
                     descriptionEdit.setText("");
                     wageEdit.setText("");
-                    workDate=null;
+                    workDate = null;
 
                     date.setText("");
                 } else {

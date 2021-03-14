@@ -46,7 +46,7 @@ public class changePwdActivity extends AppCompatActivity {
         dbUser = FirebaseDatabase.getInstance().getReference("User");
         dbVerification = FirebaseDatabase.getInstance().getReference("Verification");
 
-
+//save Verification Code in Firebase and get user to edit from Firebase
         sendVerificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class changePwdActivity extends AppCompatActivity {
 
         });
 
-
+//update the edited user to Firebase
         changePwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +117,9 @@ public class changePwdActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * @return a random 6 digits verification code
+     */
     protected String generateCode() {
         Random random = new Random();
         int x = random.nextInt(899999);
@@ -124,7 +127,7 @@ public class changePwdActivity extends AppCompatActivity {
         return String.valueOf(x);
     }
 
-
+    //get Verification Code in Firebase according to User to be edited
     ValueEventListener verificationCodeListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
