@@ -106,20 +106,11 @@ public class HomeFragment extends Fragment {
     };
 
 
-    /**
-     * Get all tasks from server
-     * @param
-     * @return all tasks in server
-     */
+
     public ArrayList getAllTask(){
         return allTitles;
     }
 
-    /**
-     * Find tasks in tasks list that contain keyword
-     * @param tasks & keyword
-     * @return Returns the task that comply the requirements
-     */
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
