@@ -80,9 +80,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    /**
-     The EventListner that listen the change of homepage task list
-     */
+
     ValueEventListener valueEventListener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,19 +106,11 @@ public class HomeFragment extends Fragment {
     };
 
 
-    /**
-     * Check if enter a valid username, should be less than 16 digits
-     * @return all tasks
-     */
+
     public ArrayList getAllTask(){
         return allTitles;
     }
 
-    /**
-     * Check if enter a valid username, should be less than 16 digits
-     * @param tasks, keyword
-     * @return all tasks that need to be find(searched)
-     */
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
@@ -145,43 +135,23 @@ public class HomeFragment extends Fragment {
             postTaskView = tasklist;
         }
 
-        /**
-         * Check if enter a valid username, should be less than 16 digits
-         * @return size of postTaskView
-         */
         @Override
         public int getCount() {
             //return myPost == null? 0 : myPost.size();
             return postTaskView.size();
         }
 
-
-        /**
-         * Check if enter a valid username, should be less than 16 digits
-         * @param i
-         * @return the index of postTaskView
-         */
         @Override
         public Object getItem(int i) {
             //return null;
             return postTaskView.get(i);
         }
 
-        /**
-         * Check if enter a valid username, should be less than 16 digits
-         * @param i
-         * @return i
-         */
         @Override
         public long getItemId(int i) {
             return i;
         }
 
-        /**
-         * Check if enter a valid username, should be less than 16 digits
-         * @param position,view,viewGroup
-         * @return the view
-         */
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
 
