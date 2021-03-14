@@ -81,14 +81,16 @@ public class MyPostFragment extends Fragment {
         return root;
     }
 
-
+    /**
+     * Method to iterate through the firebase and retrieve task base on the user name
+     */
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             myPost.clear();
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-//
+
                     Task task = taskSnapshot.getValue(Task.class);
                     // append task to task list
                     myPost.add(task);
@@ -108,6 +110,9 @@ public class MyPostFragment extends Fragment {
         }
     };
 
+    /**
+     * Adapter class use to iterated all retrieved tasks from firebase and post them in the list view
+     */
     class PostAAdapter extends BaseAdapter {
         private ArrayList<Task> postTaskView;
 
@@ -159,6 +164,7 @@ public class MyPostFragment extends Fragment {
             myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
             String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
             myView.salary.setText(salary);
+            // create event listener which will redirect user to the post detail page
             myView.taskListLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -175,6 +181,7 @@ public class MyPostFragment extends Fragment {
                 }
             });
 
+            // create the event listener which will redirect user to the edit page
             myView.editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -192,6 +199,9 @@ public class MyPostFragment extends Fragment {
         }
     }
 
+    /**
+     * This class defined what need to be showed for each task when post them in the list view
+     */
     class ViewHolder {
         private RelativeLayout taskListLayout;
         private TextView taskTitle;

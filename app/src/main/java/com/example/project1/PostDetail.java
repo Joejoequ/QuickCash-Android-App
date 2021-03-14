@@ -44,7 +44,9 @@ public class PostDetail extends AppCompatActivity {
         setTaskData();
     }
 
-
+    /**
+     * The method will capture all task information which passed from myPost.
+     */
     public void getTaskData() {
         if (hasDataPassing()) {
             taskTitle = getIntent().getStringExtra("taskTitle");
@@ -69,6 +71,10 @@ public class PostDetail extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will check if there is some necessary task information passing from myPost.
+     * @return -- True if all necessary task information are passed
+     */
     public boolean hasDataPassing() {
         boolean hasData = true;
 
@@ -80,6 +86,9 @@ public class PostDetail extends AppCompatActivity {
         return hasData;
     }
 
+    /**
+     * This method will display all task information in the PostDetail UI
+     */
     public void setTaskData() {
         title.setText(taskTitle);
         description.setText(taskDescription);
