@@ -63,8 +63,8 @@ public class EditFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_edit, container, false);
-
-        String editTaskId=getArguments().getString("taskId");
+        //get TaskID of Tasks to be edited
+        String editTaskId = getArguments().getString("taskId");
         dbTask = FirebaseDatabase.getInstance().getReference("Task");
         MainActivity parentActivity = (MainActivity) getActivity();
         userName = parentActivity.getUserName();
@@ -75,14 +75,12 @@ public class EditFragment extends Fragment {
         titleEdit = root.findViewById(R.id.editTitle);
         descriptionEdit = root.findViewById(R.id.editDescription);
         wageEdit = root.findViewById(R.id.editWage);
-
-
-
         selectDate = root.findViewById(R.id.editSelectDate);
         postBtn = root.findViewById(R.id.editBtn);
         date = root.findViewById(R.id.editDateView);
         statusLabel = root.findViewById(R.id.editStatus);
 
+        //open DatePickerDialog
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +97,7 @@ public class EditFragment extends Fragment {
 
                         simpleDateFormat.setTimeZone(TimeZone.getDefault());
                         try {
-                            workDate = simpleDateFormat.parse(desc+" 23:59:59");
+                            workDate = simpleDateFormat.parse(desc + " 23:59:59");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -114,7 +112,7 @@ public class EditFragment extends Fragment {
             }
         });
 
-
+//save the edited Task in Firebase
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,8 +121,8 @@ public class EditFragment extends Fragment {
                 String wage = wageEdit.getText().toString().trim();
 
                 if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null) {
-                    
-                    
+
+
                     editTask.setTitle(title);
                     editTask.setDescription(description);
                     editTask.setWage(Integer.parseInt(wage));
@@ -143,10 +141,11 @@ public class EditFragment extends Fragment {
         });
 
 
-
         return root;
     }
-    ValueEventListener valueEventListener=new ValueEventListener() {
+
+    //fill the blank in editPage with Task details in Firebase
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
@@ -165,7 +164,7 @@ public class EditFragment extends Fragment {
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_LONG).show();
         }
     };
 
