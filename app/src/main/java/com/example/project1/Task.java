@@ -23,7 +23,8 @@ public class Task {
     private String publisher;
     private String worker;
     private String status;
-    public Task(){
+
+    public Task() {
 
     }
 
@@ -40,32 +41,33 @@ public class Task {
 
     }
 
-
+    /**
+     *
+     * @param worker the userName of worker who accepts this task
+     */
     public void acceptTask(String worker) {
         this.worker = worker;
         this.status = ACCEPTED;
 
     }
 
+    /**
+     * if task has been accepted or expired, then it is not available to user
+     * @return if this task is available for user to see
+     */
     public boolean available() {
-        return this.status .equals( PUBLISHED) && workDate.after(new Date());
+        return this.status.equals(PUBLISHED) && workDate.after(new Date());
     }
 
+    /**
+     *
+     * @return the workDate in "yyyy-mm-dd" format
+     */
+    public String formattedWorkDate() {
 
-
-
-    public String formattedPostDate(){
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss zzz");
-        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        return ft.format(postDate);
+        return DateProcessor.dateToString(workDate).substring(0, 10);
     }
 
-
-
-    public String formattedWorkDate(){
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-        return ft.format(workDate);
-    }
     //getters and setters
     public String getTitle() {
         return title;
@@ -76,26 +78,25 @@ public class Task {
     }
 
     public String getWorkDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-
-        return simpleDateFormat.format(workDate);
+        return DateProcessor.dateToString(workDate);
 
     }
+
     public void setWorkDate(String workDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.workDate=simpleDateFormat.parse(workDate);
+
+        this.workDate = DateProcessor.stringToDate(workDate);
     }
 
     public String getPostDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        return simpleDateFormat.format(postDate);
+
+        return DateProcessor.dateToString(postDate);
 
     }
 
     public void setPostDate(String postDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        this.postDate=simpleDateFormat.parse(postDate);
+
+        this.postDate = DateProcessor.stringToDate(postDate);
     }
 
     public String getWorker() {
@@ -118,8 +119,8 @@ public class Task {
         return wage;
     }
 
-    public void setTaskId(String id){
-        this.taskId=id;
+    public void setTaskId(String id) {
+        this.taskId = id;
     }
 
     public void setDescription(String description) {
@@ -133,6 +134,10 @@ public class Task {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    /**
+     * implement compare function for task according to date
+     */
 
     public static Comparator<Task> postDateSort = new Comparator<Task>() {
         @Override

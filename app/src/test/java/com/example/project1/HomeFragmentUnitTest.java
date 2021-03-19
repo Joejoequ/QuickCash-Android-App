@@ -14,6 +14,12 @@ public class HomeFragmentUnitTest {
     Task test3 = new Task("ti","description",workDate,50,"publisher");
     HomeFragment homeFragment = new HomeFragment();
 
+    /**
+     * Check if keyword is match with task title in the server
+     * @param
+     * @return true if keyword has find in task list
+     */
+    //check if keyword is match with task title in the server
     @Test
     public void checkMatchT(){
         ArrayList<Task> testTask = new ArrayList<>();
@@ -23,6 +29,11 @@ public class HomeFragmentUnitTest {
         assertTrue(result.size()==2);
     }
 
+    /**
+     * Check if keyword is not match with task title in the server
+     * @param
+     * @return true if keyword hasn't find in task list
+     */
     @Test
     public void checkMatchF(){
         ArrayList<Task> testTask = new ArrayList<>();

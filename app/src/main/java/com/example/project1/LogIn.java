@@ -26,6 +26,7 @@ public class LogIn extends AppCompatActivity {
     private TextView statusLabel;
     private DatabaseReference dbUser;
     static public boolean connection;
+    private TextView forgetPwd;
 
 
     @Override
@@ -46,6 +47,14 @@ public class LogIn extends AppCompatActivity {
         dbUser = FirebaseDatabase.getInstance().getReference("User");
         switchToSignUp = findViewById(R.id.toSignUp);
         statusLabel=findViewById(R.id.status);
+        forgetPwd=findViewById(R.id.forgetPwd);
+        forgetPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changePwdActivity=new Intent(LogIn.this,changePwdActivity.class);
+                startActivity(changePwdActivity);
+            }
+        });
 
 
         switchToSignUp.setOnClickListener(new View.OnClickListener() {

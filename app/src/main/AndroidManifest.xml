@@ -9,15 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
-        <activity android:name=".LogIn"></activity>
-        <activity android:name=".PostDetail"
-            android:parentActivityName=".MainActivity"
-            android:label="Detail"/>
+        <activity android:name=".changePwdActivity"></activity>
+        <activity android:name=".LogIn" />
+        <activity
+            android:name=".PostDetail"
+            android:label="Detail"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".SignUpPage" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Project1.NoActionBar">
+            android:theme="@style/Theme.Project1.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

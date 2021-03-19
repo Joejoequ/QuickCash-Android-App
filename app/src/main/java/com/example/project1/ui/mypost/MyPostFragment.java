@@ -59,7 +59,6 @@ public class MyPostFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_mypost, container, false);
 
 
-
         // get firebase reference
         dbTask = FirebaseDatabase.getInstance().getReference();
 
@@ -68,44 +67,30 @@ public class MyPostFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
 
-        adapter=new PostAAdapter(getContext(), myPost);
+        adapter = new PostAAdapter(getContext(), myPost);
         ListView taskList = root.findViewById(R.id.tasklistView);
         taskList.setAdapter(adapter);
 
-        // testing code for UI  list view display
-//        Date currentDate=new Date();
-//        Date workDate=new Date();
-//        workDate.setMonth(6);
-//        Date workDate2=new Date();
-//        workDate2.setMonth(7);
-//        Task temp1 = new Task("title","description",workDate,50,"publisher");
-//        myPost.add(temp1);
-//        Task temp2 = new Task("title2","description2",workDate2,10,"publisher2");
-//        myPost.add(temp2);
 
         Query query = dbTask.child("Task").orderByChild("publisher").equalTo(userName);
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
-         //   Collections.sort(myPost, Task.postDateSort);
+        //   Collections.sort(myPost, Task.postDateSort);
 
         return root;
     }
 
-
-
-    ValueEventListener valueEventListener=new ValueEventListener() {
+    /**
+     * Method to iterate through the firebase and retrieve task base on the user name
+     */
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             myPost.clear();
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-//                        String title = taskSnapshot.child("title").getValue().toString();
-//                        Date workDate = (Date)taskSnapshot.child("workDate").getValue();
-//                        String description = taskSnapshot.child("description").getValue().toString();
-//                        int wage = (int)taskSnapshot.child("wage").getValue();
-//                        String publisher = taskSnapshot.child("publisher").getValue().toString();
-//                        Task task = new Task(title,description,workDate,wage,publisher);
+
                     Task task = taskSnapshot.getValue(Task.class);
                     // append task to task list
                     myPost.add(task);
@@ -114,17 +99,20 @@ public class MyPostFragment extends Fragment {
 
             } else {
                 // The user has not posted any task
-                String message =  userName+ "has not posted any task yet";
+                String message = userName + "has not posted any task yet";
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_LONG).show();
         }
     };
 
+    /**
+     * Adapter class use to iterated all retrieved tasks from firebase and post them in the list view
+     */
     class PostAAdapter extends BaseAdapter {
         private ArrayList<Task> postTaskView;
 
@@ -161,11 +149,11 @@ public class MyPostFragment extends Fragment {
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
-                myView.taskListLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
-                myView.taskTitle = (TextView)view.findViewById(R.id.Title);
-                myView.workDay = (TextView)view.findViewById(R.id.workday);
-                myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.editBtn=view.findViewById(R.id.editBtn);
+                myView.taskListLayout = (RelativeLayout) view.findViewById(R.id.tasklistLayout);
+                myView.taskTitle = (TextView) view.findViewById(R.id.Title);
+                myView.workDay = (TextView) view.findViewById(R.id.workday);
+                myView.salary = (TextView) view.findViewById(R.id.Salary);
+                myView.editBtn = view.findViewById(R.id.editBtn);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -176,13 +164,14 @@ public class MyPostFragment extends Fragment {
             myView.workDay.setText(postTaskView.get(position).formattedWorkDate());
             String salary = "Salary: " + String.valueOf(postTaskView.get(position).getWage());
             myView.salary.setText(salary);
+            // create event listener which will redirect user to the post detail page
             myView.taskListLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
                     intent.putExtra("taskTitle", postTaskView.get(position).getTitle());
                     intent.putExtra("taskDes", postTaskView.get(position).getDescription());
-                    intent.putExtra("postDay", postTaskView.get(position).formattedPostDate());
+                    intent.putExtra("postDay", postTaskView.get(position).getPostDate());
                     intent.putExtra("workDay", postTaskView.get(position).formattedWorkDate());
                     intent.putExtra("wage", String.valueOf(postTaskView.get(position).getWage()));
                     intent.putExtra("publisher", postTaskView.get(position).getPublisher());
@@ -192,15 +181,16 @@ public class MyPostFragment extends Fragment {
                 }
             });
 
+            // create the event listener which will redirect user to the edit page
             myView.editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("taskId",postTaskView.get(position).getTaskId());
+                    bundle.putString("taskId", postTaskView.get(position).getTaskId());
 
 
                     NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.nav_edit,bundle);
+                    navController.navigate(R.id.nav_edit, bundle);
 
 
                 }
@@ -209,13 +199,16 @@ public class MyPostFragment extends Fragment {
         }
     }
 
-   class ViewHolder {
+    /**
+     * This class defined what need to be showed for each task when post them in the list view
+     */
+    class ViewHolder {
         private RelativeLayout taskListLayout;
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
         private Button editBtn;
-   }
+    }
 
 
 }

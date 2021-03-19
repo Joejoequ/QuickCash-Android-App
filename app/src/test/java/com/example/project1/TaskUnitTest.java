@@ -97,8 +97,8 @@ public static void setup(){
     public void testPostDate() {
 
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
-        ft.setTimeZone(TimeZone.getTimeZone("America/Barbados"));
-        assertEquals(ft.format(currentDate).substring(0,18),t.formattedPostDate().substring(0,18));
+
+        assertEquals(ft.format(currentDate).substring(0,18),t.getPostDate().substring(0,18));
     }
 
 

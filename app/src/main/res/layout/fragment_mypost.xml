@@ -10,8 +10,9 @@
         android:id="@+id/tasklistView"
         android:layout_width="match_parent"
         android:layout_height="800dp"
-        android:background="#F8F4F4"
+        android:background="@drawable/search_view_shape"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="58dp" />
 
