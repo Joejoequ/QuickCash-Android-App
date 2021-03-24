@@ -79,6 +79,14 @@
             android:text="task status"
             android:textStyle="italic" />
 
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="298dp"
+            android:layout_marginTop="10dp"
+            tools:context=".MapsActivity" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
