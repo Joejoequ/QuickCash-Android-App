@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:id="@+id/taskDetailLayout"
-        android:layout_width="412dp"
+        android:layout_width="350dp"
         android:layout_height="611dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
@@ -82,9 +82,9 @@
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="412dp"
-            android:layout_height="339dp"
-            tools:context=".MapsActivity" />
+            android:layout_width="350dp"
+            android:layout_height="320dp"
+             />
 
 
     </LinearLayout>
