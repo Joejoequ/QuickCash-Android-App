@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit)
+                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit,R.id.nav_chat)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -101,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         navController.navigate(R.id.nav_my_task);
                         break;
                     }
+                    case R.id.nav_chat:{
+                        if (UserName == null) {
+                            navController.navigate(R.id.nav_not_logged);
+                        }
+                        else{
+                            navController.navigate(R.id.nav_chat);}
+                        break;
+                    }
 
                 }
                 return true;
@@ -115,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            mDrawerHeaderTitle.setText("Welcome!   "+UserName);
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
-            MenuItem itemInfo = menuInfo.getItem(4);
+            MenuItem itemInfo = menuInfo.getItem(5);
             itemInfo.setTitle(R.string.logoutBtn);
             }
 
