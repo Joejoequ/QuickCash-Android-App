@@ -44,4 +44,10 @@
         android:name="com.example.project1.ui.edit.EditFragment"
         android:label="Edit Your Post"
         tools:layout="@layout/fragment_edit" />
+
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.example.project1.ui.chat.ChatFragment"
+        android:label="Chatting"
+        tools:layout="@layout/activity_chat" />
 </navigation>
