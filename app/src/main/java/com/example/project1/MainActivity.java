@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.project1.ui.HistoryPage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit)
+                R.id.nav_home, R.id.nav_post, R.id.nav_history, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //when click "login" in the navigation bar, go to login activity
         Intent switchLogIn = new Intent(this, LogIn.class);
+        Intent switchHistory = new Intent(this, HistoryPage.class);
         switchLogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -99,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //}
                         //else{
                         navController.navigate(R.id.nav_my_task);
+                        break;
+                    }
+                    case  R.id.nav_history:{
+                        navController.navigate(R.id.nav_not_logged);
                         break;
                     }
 
@@ -138,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-
     }
+
     public  String getUserName(){
         return this.UserName;
     }
