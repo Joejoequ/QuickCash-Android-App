@@ -23,6 +23,7 @@ import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
 import com.example.project1.DatabasePersistence;
+import com.example.project1.TaskLocation;
 import com.google.android.gms.maps.internal.ILocationSourceDelegate;
 import com.google.firebase.database.DatabaseReference;
 
@@ -127,8 +128,9 @@ public class PostFragment extends Fragment {
 
                 if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null&&address!=null) {
 
-
-                    Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName,address);
+                    addressString=address.getAddressLine(0);
+                    TaskLocation location=new TaskLocation(address.getLatitude(),address.getLongitude());
+                    Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName,addressString,location);
                     DatabasePersistence persistence = new DatabasePersistence();
                     persistence.save(t);
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();

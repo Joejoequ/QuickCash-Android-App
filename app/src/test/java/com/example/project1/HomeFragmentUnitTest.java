@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 public class HomeFragmentUnitTest {
 
     Date workDate=new Date();
-    Task test1 = new Task("title","description",workDate,50,"publisher");
-    Task test2 = new Task("title1","description",workDate,50,"publisher");
-    Task test3 = new Task("ti","description",workDate,50,"publisher");
+    Task test1 = new Task("title","description",workDate,50,"publisher","",null);
+    Task test2 = new Task("title1","description",workDate,50,"publisher","",null);
+    Task test3 = new Task("ti","description",workDate,50,"publisher","",null);
     HomeFragment homeFragment = new HomeFragment();
 
     /**

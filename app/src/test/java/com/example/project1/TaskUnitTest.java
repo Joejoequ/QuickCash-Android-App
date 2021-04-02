@@ -1,5 +1,7 @@
 package com.example.project1;
 
+import android.location.Address;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -7,7 +9,7 @@ import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,12 +20,12 @@ public class TaskUnitTest {
      static Task t;
      static Date workDate;
      static Date currentDate;
-@BeforeClass
+ @BeforeClass
 public static void setup(){
     currentDate=new Date();
     workDate=new Date();
     workDate.setMonth(6);
-    t=new Task("title","description",workDate,50,"publisher");
+    t=new Task("title","description",workDate,50,"publisher","",new TaskLocation(0,0));
 }
 
         @Test
@@ -66,7 +68,7 @@ public static void setup(){
     }
     @Test
     public void testAcceptTask() {
-        Task task=new Task("title","description",workDate,50,"publisher");
+        Task task=new Task("title","description",workDate,50,"publisher","",new TaskLocation(0,0));
         String worker="Bob";
         task.acceptTask(worker);
         assertEquals(Task.ACCEPTED,task.getStatus());
@@ -80,7 +82,7 @@ public static void setup(){
 
     @Test
     public void testAcceptedTask() {
-        Task task=new Task("title","description",workDate,50,"publisher");
+        Task task=new Task("title","description",workDate,50,"publisher","",new TaskLocation(0,0));
         task.acceptTask("BOB");
         assertFalse(task.available());
     }
@@ -89,7 +91,7 @@ public static void setup(){
     public void testPastDueTask() {
         Date pastDate=new Date();
         pastDate.setYear(100); //set year to 2000
-        Task pastTask=new Task("title","description",pastDate,50,"publisher");
+        Task pastTask=new Task("title","description",pastDate,50,"publisher","",new TaskLocation(0,0));
         assertFalse(pastTask.available());
     }
 
@@ -98,7 +100,7 @@ public static void setup(){
 
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 
-        assertEquals(ft.format(currentDate).substring(0,18),t.getPostDate().substring(0,18));
+        assertEquals(ft.format(currentDate).substring(0,16),t.getPostDate().substring(0,16));
     }
 
 

@@ -36,7 +36,7 @@ public class Task implements Serializable {
 
     }
 
-    public Task(String title, String description, Date workDate, int wage, String publisher,Address address) {
+    public Task(String title, String description, Date workDate, int wage, String publisher,String address,TaskLocation taskLocation) {
         this.taskId = java.util.UUID.randomUUID().toString();
         this.workDate = workDate;
         this.title = title;
@@ -46,8 +46,7 @@ public class Task implements Serializable {
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
         this.worker = Task.NOWORKER;
-        this.address=address.getAddressLine(0);
-        this.location=new TaskLocation(address.getLatitude(),address.getLongitude());
+        this.location=taskLocation;
 
     }
 
