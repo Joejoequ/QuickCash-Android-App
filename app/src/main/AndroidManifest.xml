@@ -36,6 +36,11 @@
             android:name=".PostDetail"
             android:label="Detail"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.chat.Chat"
+            android:label="Chat"
+            android:parentActivityName=".MainActivity" />
+
         <activity android:name=".SignUpPage" />
         <activity
             android:name=".MainActivity"

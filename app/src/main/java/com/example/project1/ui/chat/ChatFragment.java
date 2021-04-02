@@ -3,6 +3,7 @@ package com.example.project1.ui.chat;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.User;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +55,21 @@ public class ChatFragment extends Fragment {
         adapter.notifyDataSetChanged();
         adapter = new UserAdapter(getContext(), allUser);
         userList.setAdapter(adapter);
+
+        userSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                ArrayList<User> result = findUser(getAllUser(), s);
+                adapter = new UserAdapter(getContext(), result);
+                userList.setAdapter(adapter);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         return root;
     }
@@ -153,7 +170,14 @@ public class ChatFragment extends Fragment {
 
             // write user information
             myView.userName.setText(userView.get(position).getUserName());
+            myView.userLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), Chat.class);
 
+                    getContext().startActivity(intent);
+                }
+            });
             return view;
         }
     }
