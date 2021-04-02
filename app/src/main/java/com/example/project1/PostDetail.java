@@ -20,8 +20,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +38,7 @@ import java.io.Serializable;
 public class PostDetail extends AppCompatActivity implements OnMapReadyCallback {
     String taskTitle;
     String taskDescription;
-    String taskPostDay;
+    String taskLocationString;
     String taskWorkDay;
     String taskWage;
     String taskPublisher;
@@ -49,7 +47,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
     TextView title;
     TextView description;
-    TextView postDay;
+    TextView location;
     TextView workDay;
     TextView wage;
     TextView publisher;
@@ -70,6 +68,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
     private ProgressDialog dialog;
     private Circle mCircle;
     private Marker mMarker;
+    private Task task;
 
     LocationManager manager;
     LatLng currentLocation;
@@ -84,12 +83,14 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
         title = findViewById(R.id.taskDetailTitle);
         description = findViewById(R.id.taskDetailDescription);
-        postDay = findViewById(R.id.taskPostDay);
+        location = findViewById(R.id.taskLocation);
         workDay = findViewById(R.id.taskWorkDay);
         wage = findViewById(R.id.taskWageDetail);
         publisher = findViewById(R.id.taskPublisherDetail);
         worker = findViewById(R.id.taskWorkerDetail);
         status = findViewById(R.id.taskStatus);
+        task=(Task) getIntent().getSerializableExtra("task");
+
 
         getTaskData();
         setTaskData();
@@ -134,7 +135,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
         if (hasDataPassing()) {
             taskTitle = getIntent().getStringExtra("taskTitle");
             taskDescription = getIntent().getStringExtra("taskDes");
-            taskPostDay = "Post Day: " + getIntent().getStringExtra("postDay");
+            taskLocationString = "Location: " + getIntent().getStringExtra("location");
             taskWorkDay = "Work Day: " + getIntent().getStringExtra("workDay");
             taskWage = "Wages: " + getIntent().getStringExtra("wage");
             taskPublisher = "Publisher: " + getIntent().getStringExtra("publisher");
@@ -162,7 +163,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
     public boolean hasDataPassing() {
         boolean hasData = true;
 
-        if ((!getIntent().hasExtra("taskTitle")) || (!getIntent().hasExtra("taskDes")) || (!getIntent().hasExtra("postDay"))
+        if ((!getIntent().hasExtra("taskTitle")) || (!getIntent().hasExtra("taskDes")) || (!getIntent().hasExtra("location"))
                 || (!getIntent().hasExtra("workDay")) || (!getIntent().hasExtra("wage")) || (!getIntent().hasExtra("publisher"))) {
             hasData = false;
         }
@@ -176,7 +177,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
     public void setTaskData() {
         title.setText(taskTitle);
         description.setText(taskDescription);
-        postDay.setText(taskPostDay);
+        location.setText(taskLocationString);
         workDay.setText(taskWorkDay);
         wage.setText(taskWage);
         publisher.setText(taskPublisher);

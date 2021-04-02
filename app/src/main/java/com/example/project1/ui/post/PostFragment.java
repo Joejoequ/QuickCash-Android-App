@@ -1,6 +1,8 @@
 package com.example.project1.ui.post;
 
 import android.app.DatePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +23,16 @@ import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Task;
 import com.example.project1.DatabasePersistence;
+import com.google.android.gms.maps.internal.ILocationSourceDelegate;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class PostFragment extends Fragment {
@@ -39,6 +45,7 @@ public class PostFragment extends Fragment {
     private TextView date;
     private DatabaseReference dbTask;
     private TextView statusLabel;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -60,7 +67,7 @@ public class PostFragment extends Fragment {
         EditText titleEdit = root.findViewById(R.id.taskTitle);
         EditText descriptionEdit = root.findViewById(R.id.taskDescription);
         EditText wageEdit = root.findViewById(R.id.taskWage);
-
+        EditText addressEdit=root.findViewById(R.id.taskAddress);
 
         selectDate = root.findViewById(R.id.selectDate);
         postBtn = root.findViewById(R.id.postBtn);
@@ -106,23 +113,36 @@ public class PostFragment extends Fragment {
                 String title = titleEdit.getText().toString().trim();
                 String description = descriptionEdit.getText().toString().trim();
                 String wage = wageEdit.getText().toString().trim();
+                String addressString=addressEdit.getText().toString().trim();
+                Geocoder geocoder=new Geocoder(getContext());
 
-                if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null) {
+                Address address = null;
+                try {
+                    List<Address> locationResult=geocoder.getFromLocationName(addressString,1);
+                    address= locationResult.get(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
-                    Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName);
+                if (!title.isEmpty() && !description.isEmpty() && !wage.isEmpty() && workDate != null&&address!=null) {
+
+
+                    Task t = new Task(title, description, workDate, Integer.parseInt(wage), userName,address);
                     DatabasePersistence persistence = new DatabasePersistence();
                     persistence.save(t);
                     Toast.makeText(getContext(), "Post Successfully", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Post Successfully");
                     titleEdit.setText("");
                     descriptionEdit.setText("");
+                    addressEdit.setText("");
                     wageEdit.setText("");
                     workDate = null;
+                    address=null;
 
                     date.setText("");
                 } else {
-                    Toast.makeText(getContext(), "Please Fill all the Blanks", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please Fill all the Blanks and check your Address", Toast.LENGTH_SHORT).show();
                     statusLabel.setText("Please Fill all the Blanks");
 
                 }

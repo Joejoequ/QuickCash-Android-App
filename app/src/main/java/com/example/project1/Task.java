@@ -1,5 +1,10 @@
 package com.example.project1;
 
+import android.location.Address;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +12,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Task {
+public class Task implements Serializable {
     static final String PUBLISHED = "Published";
     static final String ACCEPTED = "Accepted";
     static final String UNPAID = "Unpaid";
@@ -23,12 +28,15 @@ public class Task {
     private String publisher;
     private String worker;
     private String status;
+    private TaskLocation location;
+    private String address;
+
 
     public Task() {
 
     }
 
-    public Task(String title, String description, Date workDate, int wage, String publisher) {
+    public Task(String title, String description, Date workDate, int wage, String publisher,Address address) {
         this.taskId = java.util.UUID.randomUUID().toString();
         this.workDate = workDate;
         this.title = title;
@@ -38,6 +46,8 @@ public class Task {
         this.publisher = publisher;
         this.status = Task.PUBLISHED;
         this.worker = Task.NOWORKER;
+        this.address=address.getAddressLine(0);
+        this.location=new TaskLocation(address.getLatitude(),address.getLongitude());
 
     }
 
@@ -133,6 +143,22 @@ public class Task {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public TaskLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(TaskLocation location) {
+        this.location = location;
     }
 
     /**
