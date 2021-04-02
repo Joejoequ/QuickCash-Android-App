@@ -169,15 +169,6 @@ public class MyPostFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
-                    /**
-                    intent.putExtra("task", postTaskView.get(position).getTitle());
-                    intent.putExtra("taskDes", postTaskView.get(position).getDescription());
-                    intent.putExtra("location", postTaskView.get(position).getAddress());
-                    intent.putExtra("workDay", postTaskView.get(position).formattedWorkDate());
-                    intent.putExtra("wage", String.valueOf(postTaskView.get(position).getWage()));
-                    intent.putExtra("publisher", postTaskView.get(position).getPublisher());
-                    intent.putExtra("worker", postTaskView.get(position).getWorker());
-                    intent.putExtra("status", postTaskView.get(position).getStatus());**/
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
                 }

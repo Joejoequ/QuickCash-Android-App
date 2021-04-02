@@ -85,7 +85,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
 
         setTaskData();
-
+        taskLocation=new LatLng(task.getLocation().latitude,task.getLocation().longitude);
         activity = PostDetail.this;
         context = PostDetail.this;
 
@@ -170,7 +170,6 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
         // Add a marker in Sydney and move the camera
 
-        taskLocation = new LatLng(37.391998333333335, -122.180);
         mMap.addMarker(new MarkerOptions().position(taskLocation).title("Marker of Task"));
         drawMarkerWithCircle(taskLocation);
 
@@ -204,10 +203,12 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
 
+
+
     }
 
     private void drawMarkerWithCircle(LatLng position) {
-        int radius = 5;
+        int radius = 3;
         double radiusInMeters = radius * 1000.0;  // increase decrease this distancce as per your requirements
         int strokeColor = 0xffff0000; //red outline
         int shadeColor = 0x44ff0000; //opaque red fill
