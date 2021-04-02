@@ -7,6 +7,25 @@
     tools:context=".ui.post.PostFragment">
 
     <EditText
+        android:id="@+id/taskAddress"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/search_view_shape"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPersonName"
+        android:queryBackground="@null"
+        android:submitBackground="@null"
+        android:textSize="24sp"
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
+
+    <EditText
         android:id="@+id/taskWage"
         android:layout_width="205dp"
         android:layout_height="35dp"
@@ -55,12 +74,12 @@
 
     <EditText
         android:id="@+id/taskDescription"
-        android:layout_width="300dp"
-        android:layout_height="236dp"
+        android:layout_width="279dp"
+        android:layout_height="175dp"
         android:background="@drawable/search_view_shape"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="\n\n\n\n                  Description"
+        android:hint="\n\n\n                Description"
         android:inputType="textMultiLine"
         android:queryBackground="@null"
         android:submitBackground="@null"
@@ -70,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintVertical_bias="0.221" />
 
     <TextView
         android:id="@+id/dateView"
