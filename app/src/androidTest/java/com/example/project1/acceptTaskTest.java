@@ -37,45 +37,7 @@ public class acceptTaskTest {
         onView(withText("My Tasks")).perform(click());
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.close());
         onView(withId(R.id.tasklistView)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void checkAcceptedTask() throws InterruptedException {
-        // login
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("Login")).perform(click());
-        onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
-        onView(withId(R.id.loginBtn)).perform(click());
-
         Thread.sleep(2000);
-        onView(withId(R.id.mainSearchView)).perform(typeText("cut the grass\n"));
-        Thread.sleep(2000);
-        onView(withId(R.id.HomeListView)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void checkAcceptAvailableTask() throws InterruptedException {
-        //login process
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("Login")).perform(click());
-        onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
-        onView(withId(R.id.loginBtn)).perform(click());
-        //
-        Thread.sleep(2000);
-        onView(withId(R.id.mainSearchView)).perform(typeText("\n"));
-        Thread.sleep(2000);
-        onData(anything()).inAdapterView(withId(R.id.HomeListView)).atPosition(0).onChildView(withId(R.id.editBtn)).check(matches(isDisplayed())).perform(click());
-        Thread.sleep(2000);
-        onData(anything()).inAdapterView(withId(R.id.HomeListView)).atPosition(0).onChildView(withId(R.id.editBtn)).check(matches(isDisplayed())).perform(click());
-
-        //
-        Thread.sleep(2000);
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("My Tasks")).perform(click());
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.close());
-        onView(withId(R.id.tasklistView)).check(matches(isDisplayed()));
     }
 
 }
