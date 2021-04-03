@@ -17,7 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.Task;
@@ -38,6 +41,8 @@ public class HomeFragment extends Fragment {
     public ArrayList<Task> allTitles = new ArrayList<>();
     public ArrayList<Task> allTitle2 = new ArrayList<>();
     private PostAAdapter adapter;
+    public ArrayList<Task> acceptTask = new ArrayList<>();
+    private String userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,11 +50,16 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
         dbTask= FirebaseDatabase.getInstance().getReference();
-        Query query = dbTask.child("Task").orderByChild("publisher");
+
+        // get the current logged user
+        MainActivity activity = (MainActivity) getActivity();
+        userName = activity.getUserName();
+
+        Query query = dbTask.child("Task").orderByChild("status").equalTo("Published");
         query.addListenerForSingleValueEvent(valueEventListener);
+
+
 
         adapter = new PostAAdapter(getContext(), allTitles);
         ListView taskList = root.findViewById(R.id.HomeListView);
@@ -78,8 +88,6 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
-
-
 
     ValueEventListener valueEventListener=new ValueEventListener() {
         @Override
@@ -168,12 +176,13 @@ public class HomeFragment extends Fragment {
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
+                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
-                Button editButton=(Button)view.findViewById(R.id.editBtn);
-                editButton.setVisibility(View.GONE);
+                myView.editBtn = view.findViewById(R.id.editBtn);
+//                Button editButton=(Button)view.findViewById(R.id.editBtn);
+//                editButton.setVisibility(View.GONE);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -192,16 +201,75 @@ public class HomeFragment extends Fragment {
                     getContext().startActivity(intent);
                 }
             });
+            // create the event listener which will redirect user to accept a task
+            myView.editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String taskId = postTaskView.get(position).getTaskId();
+
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    dbTask = firebaseDatabase.getReference();
+
+                    Query query = dbTask.child("Task").orderByChild("publisher");
+                    query.addListenerForSingleValueEvent(valueEventListenerID);
+
+                    String message1 =  Integer.toString( acceptTask.size());
+                    Toast.makeText(getContext(), message1, Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i <acceptTask.size() ; i++) {
+                        Task task = acceptTask.get(i);
+                        if(taskId.equals(task.getTaskId())){
+                            if(userName != null){
+                                task.acceptTask(userName);
+                                DatabaseReference saveTask = FirebaseDatabase.getInstance().getReference("Task");
+                                saveTask.child(task.getTaskId()).setValue(task);
+                                String message = task.getStatus() +" accept a task";
+                                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
 
             return view;
         }
     }
+
+    /**
+     * Method to iterate through the firebase and retrieve task base on the taskID
+     */
+    ValueEventListener valueEventListenerID = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            acceptTask.clear();
+            if (snapshot.exists()) {
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+
+                    Task task = taskSnapshot.getValue(Task.class);
+                    // append task to task list
+                    acceptTask.add(task);
+                }
+                adapter.notifyDataSetChanged();
+            } else {
+                // The user has not accepted any task
+                String message = userName + "has not accepted any task yet";
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+        }
+    };
+
 
     class ViewHolder {
         private RelativeLayout homeTaskLayout;
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
-
+        private Button editBtn;
     }
 }
