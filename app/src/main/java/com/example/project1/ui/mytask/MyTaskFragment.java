@@ -46,14 +46,6 @@ public class MyTaskFragment extends Fragment {
                 new ViewModelProvider(this).get(MyTaskViewModel.class);
         View root = inflater.inflate(R.layout.fragment_mytask, container, false);
 
-//        final TextView textView = root.findViewById(R.id.text_slideshow);
-//        MytaskViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
         // get firebase reference
         dbTask = FirebaseDatabase.getInstance().getReference();
 
@@ -92,6 +84,9 @@ public class MyTaskFragment extends Fragment {
             } else {
                 // The user has not accepted any task
                 String message = userName + " has not accepted any task yet.";
+                if (userName == null){
+                    message = "Please Login First";
+                }
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         }
@@ -168,20 +163,6 @@ public class MyTaskFragment extends Fragment {
                 }
             });
 
-            // create the event listener which will redirect user to the edit page
-//            myView.editBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("taskId", postTaskView.get(position).getTaskId());
-//
-//
-//                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-//                    navController.navigate(R.id.nav_edit, bundle);
-//
-//
-//                }
-//            });
             return view;
         }
     }
