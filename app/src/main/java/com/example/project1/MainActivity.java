@@ -15,7 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
+import com.example.project1.ui.HistoryPage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit,R.id.nav_chat)
+                R.id.nav_home, R.id.nav_post, R.id.nav_my_post,R.id.nav_my_task,R.id.nav_login,R.id.nav_not_logged,R.id.nav_edit,R.id.nav_history,R.id.nav_chat)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //when click "login" in the navigation bar, go to login activity
         Intent switchLogIn = new Intent(this, LogIn.class);
+        Intent switchHistory = new Intent(this, HistoryPage.class);
         switchLogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -109,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             navController.navigate(R.id.nav_chat);}
                         break;
                     }
+                    case  R.id.nav_history:{
+                        navController.navigate(R.id.nav_not_logged);
+                        break;
+                    }
 
                 }
                 return true;
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            mDrawerHeaderTitle.setText("Welcome!   "+UserName);
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
-            MenuItem itemInfo = menuInfo.getItem(5);
+            MenuItem itemInfo = menuInfo.getItem(4);
             itemInfo.setTitle(R.string.logoutBtn);
             }
 
