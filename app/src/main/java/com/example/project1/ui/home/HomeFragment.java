@@ -17,14 +17,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.Task;
-import com.example.project1.ui.mypost.MyPostFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -174,7 +171,7 @@ public class HomeFragment extends Fragment {
 
             ViewHolder myView;
             if (view == null) {
-                view = inflater.inflate(R.layout.task_item, null);
+                view = inflater.inflate(R.layout.task_accept, null);
                 myView = new ViewHolder();
                 myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
