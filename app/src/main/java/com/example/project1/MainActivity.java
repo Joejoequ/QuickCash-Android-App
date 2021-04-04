@@ -15,10 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.example.project1.ui.HistoryPage;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.project1.ui.history.HistoryPage;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
