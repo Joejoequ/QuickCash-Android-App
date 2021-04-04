@@ -18,9 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project1.LogIn;
+import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
+import com.example.project1.SignUpPage;
 import com.example.project1.Task;
+import com.example.project1.User;
+import com.example.project1.changePwdActivity;
 import com.example.project1.ui.mypost.MyPostFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,16 +37,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-
+    private DatabaseReference dbHistory = FirebaseDatabase.getInstance().getReference("History");
     private HomeViewModel homeViewModel;
     private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
-    public ArrayList<Task> allTitle2 = new ArrayList<>();
     private PostAAdapter adapter;
+    private String userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        MainActivity activity = (MainActivity) getActivity();
+        userName = activity.getUserName();
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -50,6 +56,8 @@ public class HomeFragment extends Fragment {
         dbTask= FirebaseDatabase.getInstance().getReference();
         Query query = dbTask.child("Task").orderByChild("publisher");
         query.addListenerForSingleValueEvent(valueEventListener);
+        Query query2 = dbTask.child("History");
+        query2.addListenerForSingleValueEvent(valueEventListener2);
 
         adapter = new PostAAdapter(getContext(), allTitles);
         ListView taskList = root.findViewById(R.id.HomeListView);
@@ -106,6 +114,25 @@ public class HomeFragment extends Fragment {
     };
 
 
+     ValueEventListener valueEventListener2=new ValueEventListener(){
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                dbHistory.child("History").setValue("???????");
+                adapter.notifyDataSetChanged();
+            } else {
+                String message =  "No data here.";
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Toast.makeText(getContext(), "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
     public ArrayList getAllTask(){
         return allTitles;
@@ -133,6 +160,7 @@ public class HomeFragment extends Fragment {
         public PostAAdapter(Context context, ArrayList<Task> tasklist) {
             inflater = LayoutInflater.from(context);
             postTaskView = tasklist;
+
         }
 
         @Override
@@ -179,6 +207,8 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
+                    System.out.println(postTaskView.get(position).getTitle());
+                    writeHistory();
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
                 }
@@ -193,6 +223,29 @@ public class HomeFragment extends Fragment {
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
+
+    }
+
+    public void writeHistory() {
+        dbHistory.child("History").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    //getEditString();
+
+
+                    dbHistory.child("History").child("aaa").setValue("????");
+                    Toast.makeText(getContext(), "Register successfully.", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

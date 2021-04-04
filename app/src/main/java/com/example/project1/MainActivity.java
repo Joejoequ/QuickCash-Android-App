@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     }
                     case  R.id.nav_history:{
-                        navController.navigate(R.id.nav_not_logged);
+//                        if (UserName == null) {
+//                            navController.navigate(R.id.nav_not_logged);
+//                        }
+//                        else{
+                            navController.navigate(R.id.nav_history);
                         break;
                     }
 
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            mDrawerHeaderTitle.setText("Welcome!   "+UserName);
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
-            MenuItem itemInfo = menuInfo.getItem(4);
+            MenuItem itemInfo = menuInfo.getItem(6);
             itemInfo.setTitle(R.string.logoutBtn);
             }
 
