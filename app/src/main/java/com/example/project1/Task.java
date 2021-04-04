@@ -47,6 +47,7 @@ public class Task implements Serializable {
         this.status = Task.PUBLISHED;
         this.worker = Task.NOWORKER;
         this.location=taskLocation;
+        this.address=address;
 
     }
 
