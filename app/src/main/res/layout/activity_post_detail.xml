@@ -12,7 +12,7 @@
         android:layout_height="34dp"
         android:layout_marginStart="87dp"
         android:layout_marginLeft="87dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="138dp"
         android:layout_marginRight="138dp"
         android:text="TextView"
@@ -25,10 +25,12 @@
 
     <LinearLayout
         android:id="@+id/taskDetailLayout"
-        android:layout_width="350dp"
-        android:layout_height="611dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="357dp"
+        android:layout_height="583dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="52dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle">
@@ -82,9 +84,8 @@
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="350dp"
-            android:layout_height="320dp"
-             />
+            android:layout_width="match_parent"
+            android:layout_height="301dp" />
 
 
     </LinearLayout>

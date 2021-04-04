@@ -2,6 +2,8 @@ package com.example.project1.ui.post;
 
 import android.app.DatePickerDialog;
 import android.location.Address;
+
+
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,13 +26,13 @@ import com.example.project1.R;
 import com.example.project1.Task;
 import com.example.project1.DatabasePersistence;
 import com.example.project1.TaskLocation;
-import com.google.android.gms.maps.internal.ILocationSourceDelegate;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -115,6 +117,7 @@ public class PostFragment extends Fragment {
                 String description = descriptionEdit.getText().toString().trim();
                 String wage = wageEdit.getText().toString().trim();
                 String addressString=addressEdit.getText().toString().trim();
+
                 Geocoder geocoder=new Geocoder(getContext());
 
                 Address address = null;
