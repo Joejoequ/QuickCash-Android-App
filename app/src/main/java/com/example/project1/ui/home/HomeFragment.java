@@ -180,8 +180,6 @@ public class HomeFragment extends Fragment {
                 myView.editBtn = view.findViewById(R.id.editBtn);
                 myView.editBtn.setText("ACCEPT");
 
-//                Button editButton=(Button)view.findViewById(R.id.editBtn);
-//                editButton.setVisibility(View.GONE);
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
