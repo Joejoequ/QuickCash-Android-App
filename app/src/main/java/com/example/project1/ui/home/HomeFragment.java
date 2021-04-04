@@ -181,6 +181,8 @@ public class HomeFragment extends Fragment {
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
                 myView.editBtn = view.findViewById(R.id.editBtn);
+                myView.editBtn.setText("ACCEPT");
+
 //                Button editButton=(Button)view.findViewById(R.id.editBtn);
 //                editButton.setVisibility(View.GONE);
                 view.setTag(myView);
