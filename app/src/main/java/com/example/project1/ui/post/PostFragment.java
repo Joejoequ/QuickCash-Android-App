@@ -120,7 +120,10 @@ public class PostFragment extends Fragment {
                 Address address = null;
                 try {
                     List<Address> locationResult=geocoder.getFromLocationName(addressString,1);
+                    if (locationResult.size()==1){
                     address= locationResult.get(0);
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
