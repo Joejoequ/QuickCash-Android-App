@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment {
 
             ViewHolder myView;
             if (view == null) {
-                view = inflater.inflate(R.layout.task_accept, null);
+                view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
                 myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
