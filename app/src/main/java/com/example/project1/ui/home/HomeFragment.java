@@ -39,19 +39,20 @@ public class HomeFragment extends Fragment {
     public ArrayList<Task> allTitle2 = new ArrayList<>();
     private PostAAdapter adapter;
     public ArrayList<Task> acceptTask = new ArrayList<>();
-    private String userName;
+    private String userName="Guest";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        MainActivity activity = (MainActivity) getActivity();
+        userName = activity.getUserName();
+        if(userName==null) userName="Guest";
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         dbTask= FirebaseDatabase.getInstance().getReference();
 
-        // get the current logged user
-        MainActivity activity = (MainActivity) getActivity();
-        userName = activity.getUserName();
 
         Query query = dbTask.child("Task").orderByChild("status").equalTo("Published");
         query.addListenerForSingleValueEvent(valueEventListener);
@@ -194,6 +195,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
+                    dbTask.child("History").child(userName).child(postTaskView.get(position).getTaskId()).setValue(postTaskView.get(position));
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
                 }
@@ -211,19 +213,22 @@ public class HomeFragment extends Fragment {
                     query.addListenerForSingleValueEvent(valueEventListenerID);
 
                     String message1 =  Integer.toString( acceptTask.size());
-                    Toast.makeText(getContext(), message1, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getContext(), message1, Toast.LENGTH_LONG).show();
 
                     for (int i = 0; i <acceptTask.size() ; i++) {
                         Task task = acceptTask.get(i);
                         if(taskId.equals(task.getTaskId())){
                             if(userName != null){
-                                task.acceptTask(userName);
-                                DatabaseReference saveTask = FirebaseDatabase.getInstance().getReference("Task");
-                                saveTask.child(task.getTaskId()).setValue(task);
-                                String message = task.getStatus() +" accept a task";
-                                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-                                break;
+                                if(!userName.equals("Guest")){
+                                    task.acceptTask(userName);
+                                    DatabaseReference saveTask = FirebaseDatabase.getInstance().getReference("Task");
+                                    saveTask.child(task.getTaskId()).setValue(task);
+                                    String message = task.getStatus() +" accept a task";
+                                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                                    break;
+                                }
                             }
+                            else Toast.makeText(getContext(), "Please login before accept a task", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
