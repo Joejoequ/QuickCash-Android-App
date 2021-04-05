@@ -31,9 +31,15 @@
             android:title="Chat"/>
 
         <item
+            android:id="@+id/nav_history"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="History" />
+        <item
             android:id="@+id/nav_login"
             android:icon="?android:attr/fingerprintAuthDrawable"
             android:title="@string/Login" />
+
+
     </group>
 
 </menu>
