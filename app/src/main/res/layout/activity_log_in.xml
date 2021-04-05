@@ -85,7 +85,7 @@
         android:freezesText="false"
         android:text="Sign up"
 
-        app:backgroundTint="#3295A7"
+        app:backgroundTint="#FF32A79D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
@@ -98,7 +98,7 @@
         android:layout_width="110dp"
         android:layout_height="65dp"
         android:text="Log In"
-        app:backgroundTint="#3295A7"
+        app:backgroundTint="#FF32A79D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"

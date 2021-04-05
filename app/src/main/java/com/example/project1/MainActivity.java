@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     }
                     case R.id.nav_mytask:{
-                        //if (UserName == null) {
-                          //  navController.navigate(R.id.nav_not_logged);
-                        //}
-                        //else{
-                        navController.navigate(R.id.nav_my_task);
+                        if (UserName == null) {
+                            navController.navigate(R.id.nav_not_logged);
+                        }
+                        else{
+                        navController.navigate(R.id.nav_my_task);}
                         break;
                     }
                     case R.id.nav_chat:{
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //update the user information in the navigation bar
             View mHeaderView = navigationView.getHeaderView(0);
             TextView mDrawerHeaderTitle = (TextView) mHeaderView.findViewById(R.id.nav_username);
-           mDrawerHeaderTitle.setText("Welcome!   "+UserName);
+           mDrawerHeaderTitle.setText(UserName);
            //set up logout button
            Menu menuInfo=navigationView.getMenu();
             MenuItem itemInfo = menuInfo.getItem(6);

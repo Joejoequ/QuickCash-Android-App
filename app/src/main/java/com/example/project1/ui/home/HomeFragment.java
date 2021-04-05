@@ -227,6 +227,7 @@ public class HomeFragment extends Fragment {
                                     Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                                     break;
                                 }
+                                else Toast.makeText(getContext(), "Please login before accept a task", Toast.LENGTH_LONG).show();
                             }
                             else Toast.makeText(getContext(), "Please login before accept a task", Toast.LENGTH_LONG).show();
                         }
