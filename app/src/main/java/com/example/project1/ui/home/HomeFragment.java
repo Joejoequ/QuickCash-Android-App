@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
+import com.example.project1.SignUpPage;
 import com.example.project1.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,21 +31,25 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
-
     private HomeViewModel homeViewModel;
     private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
-    public ArrayList<Task> allTitle2 = new ArrayList<>();
+    public static String historyCode=",";
     private PostAAdapter adapter;
-    public ArrayList<Task> acceptTask = new ArrayList<>();
-    private String userName;
+    public String userName="Guest";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        MainActivity activity = (MainActivity) getActivity();
+        userName = activity.getUserName();
+        if(userName==null) userName="Guest";
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         dbTask= FirebaseDatabase.getInstance().getReference();
@@ -53,8 +58,16 @@ public class HomeFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
 
-        Query query = dbTask.child("Task").orderByChild("status").equalTo("Published");
+
+        dbTask= FirebaseDatabase.getInstance().getReference();
+
+
+        Query query = dbTask.child("Task");
         query.addListenerForSingleValueEvent(valueEventListener);
+        Query query2 = dbTask.child("History"); //.child("History").child("Kessel")
+        query2.addListenerForSingleValueEvent(valueEventListener2);
+
+        adapter = new PostAAdapter(getContext(), allTitles);
 
 
 
@@ -91,10 +104,9 @@ public class HomeFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-
                     Task task = taskSnapshot.getValue(Task.class);
-
                     allTitles.add(task);
+                    System.out.println("IIIIIIIIIIIIIIIIIIIIII");
                 }
                 adapter.notifyDataSetChanged();
             } else {
@@ -110,21 +122,36 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    ValueEventListener valueEventListener2=new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+//                    historyCode=  taskSnapshot.getValue(String.class);
+                    String message =  ""+historyCode;
+                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"+message);
+                }
+                adapter.notifyDataSetChanged();
+            } else {
 
-    /**
-     * Get all tasks from server
-     * @param
-     * @return all tasks in server
-     */
+                String message =  "No data ";
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+        }
+    };
+
+
+
+
     public ArrayList getAllTask(){
         return allTitles;
     }
 
-    /**
-     * Find tasks in tasks list that contain keyword
-     * @param tasks & keyword
-     * @return Returns the task that comply the requirements
-     */
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
@@ -147,6 +174,7 @@ public class HomeFragment extends Fragment {
         public PostAAdapter(Context context, ArrayList<Task> tasklist) {
             inflater = LayoutInflater.from(context);
             postTaskView = tasklist;
+
         }
 
         @Override
@@ -154,6 +182,11 @@ public class HomeFragment extends Fragment {
             //return myPost == null? 0 : myPost.size();
             return postTaskView.size();
         }
+
+//        public ArrayList<Task> analyseHistory(String historyCode,ArrayList<Task> allHistory){
+//            ArrayList<Task> realHistory=new ArrayList<Task>();
+//            return realHistory;
+//        }
 
         @Override
         public Object getItem(int i) {
@@ -194,6 +227,11 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
+                    System.out.println("11111111111111"+postTaskView.get(position).getTitle());
+
+                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL2"+historyCode);
+                        dbTask.child("History").child(userName).child(postTaskView.get(position).getTaskId()).setValue(postTaskView.get(position));
+
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
                 }
@@ -268,5 +306,15 @@ public class HomeFragment extends Fragment {
         private TextView workDay;
         private TextView salary;
         private Button editBtn;
+    }
+
+
+
+
+    public Boolean itContains(String code,String id){
+        Boolean result=false;
+        List<String>  toBeSent = new ArrayList<String>(Arrays.asList(code.split(",")));
+        if(code.contains(id)) result=true;
+        return false;
     }
 }
