@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
 import com.example.project1.User;
@@ -37,12 +38,15 @@ public class ChatFragment extends Fragment {
     private DatabaseReference dbUser;
     public ArrayList<User> allUser = new ArrayList<>();
     private UserAdapter adapter;
+    String sender;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                                 ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_chat, container, false);
 
         dbUser = FirebaseDatabase.getInstance().getReference();
+        MainActivity parentActivity = (MainActivity)getActivity();
+        sender = parentActivity.getUserName();
 
         Query query = dbUser.child("User").orderByChild("userName");
         query.addListenerForSingleValueEvent(valueEventListener);
@@ -174,7 +178,8 @@ public class ChatFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), Chat.class);
-
+                    intent.putExtra("receiver", myView.userName.getText());
+                    intent.putExtra("sender", sender);
                     getContext().startActivity(intent);
                 }
             });
