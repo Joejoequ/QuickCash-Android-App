@@ -18,15 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.project1.LogIn;
 import com.example.project1.MainActivity;
 import com.example.project1.PostDetail;
 import com.example.project1.R;
-import com.example.project1.SignUpPage;
 import com.example.project1.Task;
-import com.example.project1.User;
-import com.example.project1.changePwdActivity;
-import com.example.project1.ui.mypost.MyPostFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,39 +30,34 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
+
     private HomeViewModel homeViewModel;
     private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
-    public static String historyCode=",";
+    public ArrayList<Task> allTitle2 = new ArrayList<>();
     private PostAAdapter adapter;
-    public String userName="Guest";
+    public ArrayList<Task> acceptTask = new ArrayList<>();
+    private String userName="Guest";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
         if(userName==null) userName="Guest";
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
 
         dbTask= FirebaseDatabase.getInstance().getReference();
 
 
-        Query query = dbTask.child("Task");
+        Query query = dbTask.child("Task").orderByChild("status").equalTo("Published");
         query.addListenerForSingleValueEvent(valueEventListener);
-        Query query2 = dbTask.child("History"); //.child("History").child("Kessel")
-        query2.addListenerForSingleValueEvent(valueEventListener2);
 
-        adapter = new PostAAdapter(getContext(), allTitles);
+
 
         adapter = new PostAAdapter(getContext(), allTitles);
         ListView taskList = root.findViewById(R.id.HomeListView);
@@ -97,16 +87,15 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-
-
     ValueEventListener valueEventListener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+
                     Task task = taskSnapshot.getValue(Task.class);
+
                     allTitles.add(task);
-                    System.out.println("IIIIIIIIIIIIIIIIIIIIII");
                 }
                 adapter.notifyDataSetChanged();
             } else {
@@ -122,36 +111,21 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    ValueEventListener valueEventListener2=new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (snapshot.exists()) {
-                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-//                    historyCode=  taskSnapshot.getValue(String.class);
-                    String message =  ""+historyCode;
-                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"+message);
-                }
-                adapter.notifyDataSetChanged();
-            } else {
 
-                String message =  "No data ";
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
-        }
-    };
-
-
-
-
+    /**
+     * Get all tasks from server
+     * @param
+     * @return all tasks in server
+     */
     public ArrayList getAllTask(){
         return allTitles;
     }
 
+    /**
+     * Find tasks in tasks list that contain keyword
+     * @param tasks & keyword
+     * @return Returns the task that comply the requirements
+     */
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
 
@@ -174,7 +148,6 @@ public class HomeFragment extends Fragment {
         public PostAAdapter(Context context, ArrayList<Task> tasklist) {
             inflater = LayoutInflater.from(context);
             postTaskView = tasklist;
-
         }
 
         @Override
@@ -182,11 +155,6 @@ public class HomeFragment extends Fragment {
             //return myPost == null? 0 : myPost.size();
             return postTaskView.size();
         }
-
-//        public ArrayList<Task> analyseHistory(String historyCode,ArrayList<Task> allHistory){
-//            ArrayList<Task> realHistory=new ArrayList<Task>();
-//            return realHistory;
-//        }
 
         @Override
         public Object getItem(int i) {
@@ -206,12 +174,13 @@ public class HomeFragment extends Fragment {
             if (view == null) {
                 view = inflater.inflate(R.layout.task_item, null);
                 myView = new ViewHolder();
+                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
                 myView.taskTitle = (TextView)view.findViewById(R.id.Title);
                 myView.workDay = (TextView)view.findViewById(R.id.workday);
                 myView.salary = (TextView)view.findViewById(R.id.Salary);
-                myView.homeTaskLayout = (RelativeLayout)view.findViewById(R.id.tasklistLayout);
-                Button editButton=(Button)view.findViewById(R.id.editBtn);
-                editButton.setVisibility(View.GONE);
+                myView.editBtn = view.findViewById(R.id.editBtn);
+                myView.editBtn.setText("ACCEPT");
+
                 view.setTag(myView);
             } else {
                 myView = (ViewHolder) view.getTag();
@@ -226,13 +195,42 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
-                    System.out.println("11111111111111"+postTaskView.get(position).getTitle());
-
-                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL2"+historyCode);
-                        dbTask.child("History").child(userName).child(postTaskView.get(position).getTaskId()).setValue(postTaskView.get(position));
-
+                    dbTask.child("History").child(userName).child(postTaskView.get(position).getTaskId()).setValue(postTaskView.get(position));
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
+                }
+            });
+            // create the event listener which will redirect user to accept a task
+            myView.editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String taskId = postTaskView.get(position).getTaskId();
+
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    dbTask = firebaseDatabase.getReference();
+
+                    Query query = dbTask.child("Task").orderByChild("publisher");
+                    query.addListenerForSingleValueEvent(valueEventListenerID);
+
+                    String message1 =  Integer.toString( acceptTask.size());
+//                    Toast.makeText(getContext(), message1, Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i <acceptTask.size() ; i++) {
+                        Task task = acceptTask.get(i);
+                        if(taskId.equals(task.getTaskId())){
+                            if(userName != null){
+                                if(!userName.equals("Guest")){
+                                    task.acceptTask(userName);
+                                    DatabaseReference saveTask = FirebaseDatabase.getInstance().getReference("Task");
+                                    saveTask.child(task.getTaskId()).setValue(task);
+                                    String message = task.getStatus() +" accept a task";
+                                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                                    break;
+                                }
+                            }
+                            else Toast.makeText(getContext(), "Please login before accept a task", Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
             });
 
@@ -240,21 +238,40 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to iterate through the firebase and retrieve task base on the taskID
+     */
+    ValueEventListener valueEventListenerID = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            acceptTask.clear();
+            if (snapshot.exists()) {
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+
+                    Task task = taskSnapshot.getValue(Task.class);
+                    // append task to task list
+                    acceptTask.add(task);
+                }
+                adapter.notifyDataSetChanged();
+            } else {
+                // The user has not accepted any task
+                String message = userName + "has not accepted any task yet";
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_LONG).show();
+        }
+    };
+
+
     class ViewHolder {
         private RelativeLayout homeTaskLayout;
         private TextView taskTitle;
         private TextView workDay;
         private TextView salary;
-
-    }
-
-
-
-
-    public Boolean itContains(String code,String id){
-        Boolean result=false;
-        List<String>  toBeSent = new ArrayList<String>(Arrays.asList(code.split(",")));
-        if(code.contains(id)) result=true;
-        return false;
+        private Button editBtn;
     }
 }
