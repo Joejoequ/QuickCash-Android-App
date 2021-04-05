@@ -109,12 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     }
                     case  R.id.nav_history:{
-//                        if (UserName == null) {
-//                            navController.navigate(R.id.nav_not_logged);
-//                        }
-//                        else{
+                        if (UserName == null) {
+                            navController.navigate(R.id.nav_not_logged);
+                        }
+                        else{
                             navController.navigate(R.id.nav_history);
                         break;
+                        }
                     }
 
                 }

@@ -35,29 +35,39 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private DatabaseReference dbHistory = FirebaseDatabase.getInstance().getReference("History");
     private HomeViewModel homeViewModel;
     private DatabaseReference dbTask ;
     public ArrayList<Task> allTitles = new ArrayList<>();
+    public static String historyCode=",";
     private PostAAdapter adapter;
-    private String userName;
+    public String userName="Guest";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
+        if(userName==null) userName="Guest";
+
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
 
+
         dbTask= FirebaseDatabase.getInstance().getReference();
-        Query query = dbTask.child("Task").orderByChild("publisher");
+
+
+        Query query = dbTask.child("Task");
         query.addListenerForSingleValueEvent(valueEventListener);
-        Query query2 = dbTask.child("History");
+        Query query2 = dbTask.child("History"); //.child("History").child("Kessel")
         query2.addListenerForSingleValueEvent(valueEventListener2);
+
+        adapter = new PostAAdapter(getContext(), allTitles);
 
         adapter = new PostAAdapter(getContext(), allTitles);
         ListView taskList = root.findViewById(R.id.HomeListView);
@@ -94,10 +104,9 @@ public class HomeFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-
                     Task task = taskSnapshot.getValue(Task.class);
-
                     allTitles.add(task);
+                    System.out.println("IIIIIIIIIIIIIIIIIIIIII");
                 }
                 adapter.notifyDataSetChanged();
             } else {
@@ -113,25 +122,30 @@ public class HomeFragment extends Fragment {
         }
     };
 
-
-     ValueEventListener valueEventListener2=new ValueEventListener(){
+    ValueEventListener valueEventListener2=new ValueEventListener() {
         @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if (dataSnapshot.exists()) {
-                dbHistory.child("History").setValue("???????");
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+//                    historyCode=  taskSnapshot.getValue(String.class);
+                    String message =  ""+historyCode;
+                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"+message);
+                }
                 adapter.notifyDataSetChanged();
             } else {
-                String message =  "No data here.";
+
+                String message =  "No data ";
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
-
         }
 
         @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-            Toast.makeText(getContext(), "DatabaseError, Please try again later", Toast.LENGTH_SHORT).show();
+        public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(getContext(),"DatabaseError, please try again later", Toast.LENGTH_LONG).show();
         }
     };
+
+
 
 
     public ArrayList getAllTask(){
@@ -168,6 +182,11 @@ public class HomeFragment extends Fragment {
             //return myPost == null? 0 : myPost.size();
             return postTaskView.size();
         }
+
+//        public ArrayList<Task> analyseHistory(String historyCode,ArrayList<Task> allHistory){
+//            ArrayList<Task> realHistory=new ArrayList<Task>();
+//            return realHistory;
+//        }
 
         @Override
         public Object getItem(int i) {
@@ -207,8 +226,11 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PostDetail.class);
-                    System.out.println(postTaskView.get(position).getTitle());
-                    writeHistory();
+                    System.out.println("11111111111111"+postTaskView.get(position).getTitle());
+
+                    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL2"+historyCode);
+                        dbTask.child("History").child(userName).child(postTaskView.get(position).getTaskId()).setValue(postTaskView.get(position));
+
                     intent.putExtra("task", postTaskView.get(position));
                     getContext().startActivity(intent);
                 }
@@ -226,26 +248,13 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void writeHistory() {
-        dbHistory.child("History").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                    //getEditString();
 
-
-                    dbHistory.child("History").child("aaa").setValue("????");
-                    Toast.makeText(getContext(), "Register successfully.", Toast.LENGTH_SHORT).show();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "DatabaseError, please try again later", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+    public Boolean itContains(String code,String id){
+        Boolean result=false;
+        List<String>  toBeSent = new ArrayList<String>(Arrays.asList(code.split(",")));
+        if(code.contains(id)) result=true;
+        return false;
     }
 }

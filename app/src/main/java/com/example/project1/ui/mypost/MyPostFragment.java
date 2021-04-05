@@ -66,7 +66,7 @@ public class MyPostFragment extends Fragment {
         // get the current logged user
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
-
+        System.out.println("111111111111111111111111"+userName);
         adapter = new PostAAdapter(getContext(), myPost);
         ListView taskList = root.findViewById(R.id.tasklistView);
         taskList.setAdapter(adapter);

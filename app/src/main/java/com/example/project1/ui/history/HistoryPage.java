@@ -34,9 +34,9 @@ import java.util.ArrayList;
 
 public class HistoryPage extends Fragment {
     private DatabaseReference dbTask ;
-    public ArrayList<Task> allTitles = new ArrayList<>();
+    public ArrayList<Task> allHistories = new ArrayList<>();
     private PostAAdapter adapter;
-    private String userName;
+    private String userName="Guest";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,19 +47,21 @@ public class HistoryPage extends Fragment {
         // get the current logged user
         MainActivity activity = (MainActivity) getActivity();
         userName = activity.getUserName();
+        if(userName==null) userName="Guest";
+        System.out.println("111111111111111111111111"+userName);
 
         dbTask= FirebaseDatabase.getInstance().getReference();
-        Query query = dbTask.child("Task").orderByChild("publisher");
+        Query query = dbTask.child("History").child(userName);
         query.addListenerForSingleValueEvent(valueEventListener);
 
-        adapter = new PostAAdapter(getContext(), allTitles);
+        adapter = new PostAAdapter(getContext(), allHistories);
         ListView taskList = root.findViewById(R.id.HistoryListView);
 //        SearchView search = root.findViewById(R.id.mainSearchView);
         taskList.setAdapter(adapter);
 
         /*allTitles.remove(1);*/
         adapter.notifyDataSetChanged();
-        adapter = new PostAAdapter(getContext(), allTitles);
+        adapter = new PostAAdapter(getContext(), allHistories);
         taskList.setAdapter(adapter);
 
         return root;
@@ -75,7 +77,7 @@ public class HistoryPage extends Fragment {
 
                     Task task = taskSnapshot.getValue(Task.class);
 
-                    allTitles.add(task);
+                    allHistories.add(task);
                 }
                 adapter.notifyDataSetChanged();
             } else {
@@ -93,11 +95,6 @@ public class HistoryPage extends Fragment {
 
 
 
-
-
-    public ArrayList getAllTask(){
-        return allTitles;
-    }
 
     public ArrayList<Task> Search(ArrayList<Task> tasks, String keyword){
         ArrayList<Task> afterCompare = new ArrayList<>();
