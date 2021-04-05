@@ -106,7 +106,7 @@ public class LoginActivityTest {
     //if it will jump to MainActivity after login successfully
     public void LoginSuccess() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("qwert5678"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
         Thread.sleep(1000);
         intended(hasComponent(MainActivity.class.getName()));
@@ -118,7 +118,7 @@ public class LoginActivityTest {
     //if it will send information to MainActivity
     public void LoginWithUserInformation() throws InterruptedException {
         onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("qwert5678"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
         Thread.sleep(1000);
         intended(hasExtra("UserName", "test456"));
