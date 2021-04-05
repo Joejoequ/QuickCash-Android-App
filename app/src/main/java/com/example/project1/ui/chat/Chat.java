@@ -5,6 +5,7 @@ import android.text.style.IconMarginSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class Chat extends AppCompatActivity {
     private String receiver;
     private String sender;
     private DatabaseReference dbChat;
+    private EditText receiver_name;
 
 
     @Override
@@ -45,6 +47,9 @@ public class Chat extends AppCompatActivity {
         getMessage(sender,receiver);
 
         //initMsgs();
+
+        receiver_name = findViewById(R.id.common_toolbar_title);
+        receiver_name.setText(receiver);
         inputText = findViewById(R.id.input_text);
         send = findViewById(R.id.send_button);
         msgRecyclerView = findViewById(R.id.msg_chatting_recycler_view);

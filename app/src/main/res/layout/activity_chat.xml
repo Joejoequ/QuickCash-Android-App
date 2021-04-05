@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.chat.ChatFragment">
 
-
     <SearchView
         android:id="@+id/userSearchView"
         android:layout_width="match_parent"
@@ -20,9 +19,6 @@
         android:queryBackground="@null"
         android:submitBackground="@null"
         android:visibility="visible"
-
-
-
         />
 
     <ListView
@@ -32,8 +28,5 @@
         android:layout_weight="1"
         android:background="@drawable/search_view_shape"
         android:visibility="visible" />
-
-
-
 
 </LinearLayout>
