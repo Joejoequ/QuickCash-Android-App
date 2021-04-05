@@ -13,4 +13,5 @@
         android:text="There is some histories"
         android:textSize="24sp"
         android:visibility="visible" />
+
 </FrameLayout>
