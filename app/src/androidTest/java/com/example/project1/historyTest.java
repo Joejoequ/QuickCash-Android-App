@@ -22,19 +22,8 @@ public class historyTest {
     @Rule
     public ActivityScenarioRule<MainActivity> myRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    @Test
-    //if it will jump to MainActivity after login successfully
-    public void recordHistory() throws InterruptedException {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("Login")).perform(click());
-        onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
-        onView(withId(R.id.loginBtn)).perform(click());
-        Thread.sleep(1000);
-        intended(hasComponent(MainActivity.class.getName()));
 
-    }
-
+    /*** AT11:1**/
     @Test
     public void checkUnloggedhistoryPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -42,7 +31,7 @@ public class historyTest {
         onView(withId(R.id.tasklistView)).check(doesNotExist());
         onView(withId(R.id.loginPrompt)).check(matches(withText("Please Login First")));
     }
-
+    /*** AT11:2**/
     @Test
     public void checkLoggedhistoryPage() throws InterruptedException {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

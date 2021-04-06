@@ -33,6 +33,7 @@ public class PostDetailTest {
     public ActivityScenarioRule<MainActivity> myRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
+    /*** AT9:1**/
     //check if successfully move to PostDetail activity
     public void checkIfMoveToPostDetailActivity() throws InterruptedException {
         Thread.sleep(5000);
@@ -40,6 +41,8 @@ public class PostDetailTest {
         intended(hasComponent(PostDetail.class.getName()));
     }
 
+
+    /*** AT9:1**/
     @Test
     //check MapFragment  is successfully shown
     public void checkMapFragmentSuccessfullyShown() throws InterruptedException {
@@ -52,6 +55,7 @@ public class PostDetailTest {
 
 
     @Test
+    /*** AT9:2**/
     //check MapFragment  is successfully shown
     public void checkGoogleMapSuccessfullyLoaded() throws InterruptedException {
         Thread.sleep(5000);

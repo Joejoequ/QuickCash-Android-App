@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.anything;
 public class chatFragmentTest {
     @Rule
     public ActivityScenarioRule<MainActivity> myRule = new ActivityScenarioRule<>(MainActivity.class);
-
+    /*** AT10:2**/
     @Test
     public void checkUnloggedMyPostPage() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -28,7 +28,7 @@ public class chatFragmentTest {
         onView(withId(R.id.userListView)).check(doesNotExist());
         onView(withId(R.id.loginPrompt)).check(matches(withText("Please Login First")));
     }
-
+    /*** AT10:3**/
     @Test
     public void checkLoggedChatPage() throws InterruptedException {
         // login process

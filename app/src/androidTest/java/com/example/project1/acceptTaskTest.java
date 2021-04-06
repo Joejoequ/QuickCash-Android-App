@@ -22,7 +22,7 @@ public class acceptTaskTest {
     @Rule
     public ActivityScenarioRule<MainActivity> myRule = new ActivityScenarioRule<>(MainActivity.class);
 
-
+    /*** AT8:1**/
     @Test
     public void checkLoggedMyTaskPage() throws InterruptedException {
         // login
@@ -39,6 +39,8 @@ public class acceptTaskTest {
         onView(withId(R.id.tasklistView)).check(matches(isDisplayed()));
         Thread.sleep(2000);
     }
+
+    /*** AT8:2**/
     @Test
     public void checkAcceptedTask() throws InterruptedException {
         // login
@@ -54,7 +56,7 @@ public class acceptTaskTest {
         onView(withId(R.id.HomeListView)).check(matches(isDisplayed()));
         Thread.sleep(2000);
     }
-
+    /*** AT8:2**/
     @Test
     public void checkAcceptAvailableTask() throws InterruptedException {
         //login process
@@ -63,7 +65,7 @@ public class acceptTaskTest {
         onView(withId(R.id.userName)).perform(typeText("test456"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("456"), closeSoftKeyboard());
         onView(withId(R.id.loginBtn)).perform(click());
-        //
+
         Thread.sleep(2000);
         onView(withId(R.id.mainSearchView)).perform(typeText("\n"));
 //        Thread.sleep(2000);
