@@ -20,9 +20,6 @@
         android:queryBackground="@null"
         android:submitBackground="@null"
         android:visibility="visible"
-
-
-
         />
 
     <ListView

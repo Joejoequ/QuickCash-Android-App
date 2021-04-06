@@ -53,12 +53,12 @@
         android:id="@+id/userIcon"
         android:layout_width="38dp"
         android:layout_height="33dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/changePwd_userName"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475"
+        app:layout_constraintVertical_bias="0.477"
         app:srcCompat="@mipmap/user_icon" />
 
     <EditText
@@ -124,7 +124,7 @@
         android:layout_width="48dp"
         android:layout_height="41dp"
         android:layout_marginStart="65dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginLeft="70dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
@@ -133,7 +133,8 @@
         app:layout_constraintBottom_toTopOf="@+id/lockIcon"
         app:layout_constraintEnd_toStartOf="@+id/verification"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/userIcon"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

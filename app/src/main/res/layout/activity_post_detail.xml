@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostDetail">
+    tools:context=".PostDetail"
+    android:background="@drawable/search_view_shape">
 
     <TextView
+        android:gravity="center"
         android:id="@+id/taskDetailTitle"
         android:layout_width="285dp"
         android:layout_height="34dp"

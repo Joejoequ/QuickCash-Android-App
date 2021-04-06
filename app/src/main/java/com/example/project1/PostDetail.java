@@ -140,7 +140,7 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
             }
 
             title.setText(task.getTitle());
-            description.setText(task.getDescription());
+            description.setText("Description: "+task.getDescription());
             location.setText("Location: " + task.getAddress());
             workDay.setText("Work Day: " + task.getWorkDate());
             wage.setText("Wages: " + task.getWage());
