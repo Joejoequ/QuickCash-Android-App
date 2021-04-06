@@ -13,10 +13,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Task implements Serializable {
-    static final String PUBLISHED = "Published";
-    static final String ACCEPTED = "Accepted";
-    static final String UNPAID = "Unpaid";
-    static final String FINISHED = "Finished";
+
     static final String NOWORKER = "Does Not Be Accepted Yet";
 
     private String taskId;
@@ -44,7 +41,7 @@ public class Task implements Serializable {
         this.postDate = new Date();
         this.wage = wage;
         this.publisher = publisher;
-        this.status = Task.PUBLISHED;
+        this.status = TaskStatus.PUBLISHED;
         this.worker = Task.NOWORKER;
         this.location=taskLocation;
         this.address=address;
@@ -57,7 +54,7 @@ public class Task implements Serializable {
      */
     public void acceptTask(String worker) {
         this.worker = worker;
-        this.status = ACCEPTED;
+        this.status = TaskStatus.ACCEPTED;
 
     }
 
@@ -66,7 +63,7 @@ public class Task implements Serializable {
      * @return if this task is available for user to see
      */
     public boolean available() {
-        return this.status.equals(PUBLISHED) && workDate.after(new Date());
+        return this.status.equals(TaskStatus.PUBLISHED) && workDate.after(new Date());
     }
 
     /**

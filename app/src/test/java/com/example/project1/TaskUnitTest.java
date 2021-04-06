@@ -64,14 +64,14 @@ public static void setup(){
 
     @Test
     public void testStatus() {
-        assertEquals(Task.PUBLISHED,t.getStatus());
+        assertEquals(TaskStatus.PUBLISHED,t.getStatus());
     }
     @Test
     public void testAcceptTask() {
         Task task=new Task("title","description",workDate,50,"publisher","",new TaskLocation(0,0));
         String worker="Bob";
         task.acceptTask(worker);
-        assertEquals(Task.ACCEPTED,task.getStatus());
+        assertEquals(TaskStatus.ACCEPTED,task.getStatus());
         assertEquals(worker,task.getWorker());
     }
 
