@@ -50,7 +50,6 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
     Context context;
     Activity activity;
 
-
     private Task task;
 
     LocationManager manager;

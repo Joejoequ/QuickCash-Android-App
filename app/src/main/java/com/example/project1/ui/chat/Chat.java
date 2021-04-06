@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project1.DatabasePersistence;
 import com.example.project1.MainActivity;
 import com.example.project1.R;
 import com.google.firebase.database.DataSnapshot;
@@ -81,12 +82,13 @@ public class Chat extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String receiver, String content) {
-        dbChat = FirebaseDatabase.getInstance().getReference();
+
         HashMap<String, Object> chatMessage = new HashMap<>();
         chatMessage.put("sender", sender);
         chatMessage.put("receiver", receiver);
         chatMessage.put("message", content);
-        dbChat.child("Message").push().setValue(chatMessage);
+        DatabasePersistence databasePersistence=new DatabasePersistence();
+        databasePersistence.send(chatMessage);
     }
 
     private void getMessage(String sender, String receiver) {

@@ -1,10 +1,13 @@
 package com.example.project1;
 
 import com.example.project1.Task;
+import com.example.project1.ui.chat.Msg;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DatabasePersistence implements TaskPersistence{
+import java.util.HashMap;
+
+public class DatabasePersistence implements TaskPersistence,MsgPersistence{
 
 
     public boolean save(Task t) {
@@ -14,10 +17,9 @@ public class DatabasePersistence implements TaskPersistence{
     }
 
 
-
-
-
-
-
-
+    public boolean send(HashMap<String, Object>chatMessage ) {
+        DatabaseReference dbMsg = FirebaseDatabase.getInstance().getReference();
+        dbMsg.child("Message").push().setValue(chatMessage);
+        return true;
+    }
 }
