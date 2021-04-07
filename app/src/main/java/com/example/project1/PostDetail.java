@@ -196,6 +196,9 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
 
     }
+    /**
+     * draw a circle on the google map
+     */
 
     private void drawMarkerWithCircle(LatLng position) {
         int radius = 3;
@@ -212,7 +215,9 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
         mMap.addCircle(circleOptions);
 
     }
-
+/**
+     * check if app has location permission
+     */
     public void checkLocationPermission(final Activity context) {
 
         try {
@@ -242,7 +247,9 @@ public class PostDetail extends AppCompatActivity implements OnMapReadyCallback 
 
     }
 
-
+/**
+     * not have location, ask user to give permission from setting
+     */
     private void askUserToAllowPermissionFromSetting() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(

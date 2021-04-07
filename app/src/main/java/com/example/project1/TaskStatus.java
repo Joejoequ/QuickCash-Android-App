@@ -19,13 +19,24 @@ public class TaskStatus {
         return status;
     }
 
+
+    /**
+     * set TaskStatus to Accepted
+     */
+
     public void setStatusAccepted() {
         this.status = ACCEPTED;
     }
-
+    /**
+     * set TaskStatus to Unpaid
+     */
     public void setStatusUnpaid() {
         this.status = UNPAID;
     }
+
+    /**
+     * set TaskStatus to Finished
+     */
 
     public void setStatusFinished() {
         this.status =FINISHED;
